@@ -33,10 +33,8 @@ export const userSchema = new Schema({
 });
 
 userSchema.methods.setPassword = function (password) {
-  //Salt
   this.salt = crypto.randomBytes(64).toString("hex");
 
-  // Password mit salt hashen
   this.hash = crypto
     .pbkdf2Sync(password, this.salt, 1000, 64, "sha512")
     .toString("hex");

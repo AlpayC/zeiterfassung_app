@@ -7,8 +7,8 @@ const timeTrackingSchema = new mongoose.Schema({
     required: true,
   },
   date: { type: Date, required: true },
-  startTime: { type: Date, required: true },
-  endTime: { type: Date },
+  startTimes: [{ type: Date, required: true }],
+  endTimes: [{ type: Date }],
   createdAt: { type: Date, default: Date.now },
 });
 
