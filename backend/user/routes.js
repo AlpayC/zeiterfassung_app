@@ -20,12 +20,12 @@ userRouter.get("/", async (req, res) => {
 userRouter.post("/resetPassword", async (req, res) => {
   const { email } = req.body;
   try {
-    console.log("reset password for ", email);
+    console.log("reset passwort für ", email);
     await createResetToken(email);
     return res.sendStatus(200);
   } catch (e) {
-    if (e?.message === "No User with this email") {
-      return res.status(404).send({ error: "User not found" });
+    if (e?.message === "Kein User mit dieser Email vorhanden") {
+      return res.status(404).send({ error: "User nicht gefunden" });
     }
 
     return res.status(500).send({ error: "Unknown Error occurred" });
@@ -45,7 +45,7 @@ userRouter.post("/resetPassword-confirm", async (req, res) => {
 
     await user.save();
     return res.send({
-      data: { message: "New password confirmed" },
+      data: { message: "Neues Passwort bestätigt" },
     });
   } catch (e) {
     console.log(e);
@@ -61,7 +61,7 @@ userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
     await newUser.save();
     return res.send({
       data: {
-        message: "New user created",
+        message: "Neuer User angelegt",
         user: { name, email },
       },
     });
@@ -72,9 +72,9 @@ userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
     }
 
     if (e.name === "MongoServerError" && e.code === 11000) {
-      console.log("Account exists already");
+      console.log("Account existiert bereits");
       return res.status(400).send({
-        error: { message: "Username and Password combination not valid" },
+        error: { message: "Username und Passwort Kombination ist falsch" },
       });
     }
 
@@ -97,9 +97,9 @@ userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
     res.send({ message: "Success", data: user });
   } else {
     res.status(404).send({
-      message: "Failed to login",
+      message: "Login fehlgeschlagen",
       error: {
-        message: "Password and E-Mail combination is wrong.",
+        message: "Username und Passwort Kombination ist falsch.",
       },
     });
   }
