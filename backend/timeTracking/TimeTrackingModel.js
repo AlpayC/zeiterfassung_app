@@ -13,3 +13,4 @@ const timeTrackingSchema = new mongoose.Schema({
 });
 
 export const TimeTracking = mongoose.model("TimeTracking", timeTrackingSchema);
+export default TimeTracking;
