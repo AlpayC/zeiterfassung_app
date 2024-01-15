@@ -29,9 +29,13 @@ export default function Signup() {
   };
 
   return (
-    <form onSubmit={submit}>
-      <input name="name" type="text" placeholder="Your name" />
-      <input name="email" type="text" placeholder="your email" />
+    <form
+      onSubmit={submit}
+      className="gap-6 flex flex-col items-center justify-center my-12"
+    >
+      <input name="name" type="text" placeholder="Dein Name" />
+      <input name="lastname" type="text" placeholder="Dein Nachname" />
+      <input name="email" type="text" placeholder="Deine Email" />
       <input name="password" type="password" placeholder="***********" />
       {error && <small style={{ color: "red" }}>{error}</small>}
       <button>Signup</button>

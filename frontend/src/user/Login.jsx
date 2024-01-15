@@ -28,9 +28,9 @@ export default function Login() {
   return (
     <form
       onSubmit={submit}
-      className="gap-2 flex flex-row items-center justify-center"
+      className="gap-6 flex flex-col items-center justify-center my-12"
     >
-      <input name="email" type="email" placeholder="your email" />
+      <input name="email" type="email" placeholder="Deine Email" />
       <input name="password" type="password" placeholder="***********" />
       {error && <small style={{ color: "red" }}>{error}</small>}
       <button>Login</button>
