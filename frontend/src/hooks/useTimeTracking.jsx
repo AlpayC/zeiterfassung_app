@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const useTimeTracking = (user) => {
@@ -14,6 +14,7 @@ const useTimeTracking = (user) => {
 
       if (response.status === 201) {
         setIsTracking(true);
+        sessionStorage.setItem("timeTrackingToken", new Date().toISOString());
       } else {
         console.error(`Error starting time tracking: ${response.data}`);
       }
@@ -38,10 +39,19 @@ const useTimeTracking = (user) => {
       });
 
       setIsTracking(false);
+      sessionStorage.removeItem("timeTrackingToken");
     } catch (error) {
       console.error("Error stopping time tracking:", error.message);
     }
   };
+
+  useEffect(() => {
+    const timeTrackingToken = sessionStorage.getItem("timeTrackingToken");
+
+    if (timeTrackingToken) {
+      setIsTracking(true);
+    }
+  }, []);
 
   return { isTracking, startTracking, stopTracking };
 };
