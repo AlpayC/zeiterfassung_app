@@ -15,15 +15,18 @@
   "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.6",
+    "date-fns": "^3.2.0",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "form-data": "^4.0.0",
+    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.1",
     "mailgun.js": "^9.2.0",
     "mongoose": "^7.4.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.8",
-    "nodemailer-mailgun-transport": "^2.1.5"
+    "nodemailer-mailgun-transport": "^2.1.5",
+    "npm": "^10.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
