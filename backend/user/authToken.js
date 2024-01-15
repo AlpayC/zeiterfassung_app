@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 
-// userEmailObj = {email: ""}
 export function generateAccessToken(userEmailObj, persist = false) {
   return jwt.sign(userEmailObj, process.env.TOKEN_SECRET, {
     expiresIn: persist ? "7d" : "4h",
