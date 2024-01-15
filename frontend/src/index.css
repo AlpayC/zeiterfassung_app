@@ -57,18 +57,24 @@ abbr,
 input {
   font-size: 1.6rem;
 }
+
 input {
   border: 1px solid black;
   padding: 1rem 2rem 1rem;
   border-radius: 2rem;
 }
 button {
-  border: solid 1px red;
   padding: 1rem 2rem 1rem;
   color: white;
   background-color: red;
   border-radius: 2rem;
 }
 button[type="button"] {
-  background-color: red;
+  background-color: black;
+}
+small {
+  font-size: 1.6rem;
+}
+span {
+  font-size: 1.6rem;
 }
