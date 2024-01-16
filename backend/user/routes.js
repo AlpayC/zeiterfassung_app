@@ -74,7 +74,7 @@ userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
     if (e.name === "MongoServerError" && e.code === 11000) {
       console.log("Account existiert bereits");
       return res.status(400).send({
-        error: { message: "Username und Passwort Kombination ist falsch" },
+        error: { message: "Ein Account mit diesen Daten existiert bereits!" },
       });
     }
 
@@ -85,21 +85,45 @@ userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
 userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
   const { email, password } = req.body;
   console.log({ email, password });
-  const user = await User.findOne({ email }).select("+hash").select("+salt");
 
-  const passwordIsValid = user.verifyPassword(password);
-  if (passwordIsValid) {
-    const token = generateAccessToken({ email });
-    console.log(token);
+  try {
+    const user = await User.findOne({ email }).select("+hash").select("+salt");
 
-    res.cookie("auth", token, { httpOnly: true, maxAge: hoursInMillisec(4) });
+    if (user) {
+      const passwordIsValid = user.verifyPassword(password);
 
-    res.send({ message: "Success", data: user });
-  } else {
-    res.status(404).send({
-      message: "Login fehlgeschlagen",
+      if (passwordIsValid) {
+        const token = generateAccessToken({ email });
+        console.log(token);
+
+        res.cookie("auth", token, {
+          httpOnly: true,
+          maxAge: hoursInMillisec(4),
+        });
+
+        res.send({ message: "Success", data: user });
+      } else {
+        res.status(404).send({
+          message: "Login fehlgeschlagen",
+          error: {
+            message: "Username und Passwort Kombination ist falsch.",
+          },
+        });
+      }
+    } else {
+      res.status(404).send({
+        message: "Login fehlgeschlagen",
+        error: {
+          message: "Benutzer nicht gefunden.",
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).send({
+      message: "Internal Server Error",
       error: {
-        message: "Username und Passwort Kombination ist falsch.",
+        message: "Es ist ein Fehler aufgetreten.",
       },
     });
   }

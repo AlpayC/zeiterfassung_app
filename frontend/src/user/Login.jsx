@@ -6,7 +6,7 @@ import { UserContext } from "./UserContext";
 
 export default function Login() {
   const { refetch } = useContext(UserContext);
-  const nav = useNavigate();
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const submit = async (e) => {
@@ -15,13 +15,14 @@ export default function Login() {
 
     const data = new FormData(e.currentTarget);
     try {
-      const response = await axios.post("/api/user/login", data);
-      console.log(response.data.data._id);
+      await axios.post("/api/user/login", data);
       refetch();
-      nav("/tracker");
+      navigate("/tracker");
     } catch (e) {
-      console.log(e);
-      setError("An Error occured, try again later");
+      // console.log(e);
+      setError(
+        `${e.response?.data.message}: ${e.response?.data.error.message}`
+      );
     }
   };
 
