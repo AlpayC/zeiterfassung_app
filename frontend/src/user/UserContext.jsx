@@ -1,38 +1,49 @@
-import { useNavigate } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const nav = useNavigate();
-  const [shouldRefetch, _refetch] = useState(true);
   const [user, setUser] = useState(null);
+  const [shouldRefetch, setShouldRefetch] = useState(true);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-  const refetch = () => _refetch((prev) => !prev);
+  const refetch = () => setShouldRefetch((prev) => !prev);
 
   const logout = async () => {
-    await axios.get("/api/user/logout");
-    setUser(null);
-    nav("/");
+    try {
+      await axios.get("/api/user/logout");
+      setUser(null);
+      navigate("/");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   useEffect(() => {
-    axios
-      .get("/api/user/secure")
-      .then(({ data }) => setUser(data))
-      .catch((e) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/user/secure");
+        if (response && response.data) {
+          setUser(response.data);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
         setUser(null);
-      });
+      }
+    };
+
+    if (shouldRefetch) {
+      fetchData();
+      setShouldRefetch(false);
+    }
   }, [shouldRefetch]);
 
   return (
-    <UserContext.Provider
-      value={{ user, isLoggedIn: !!user, refetch, logout, setUser }}
-    >
+    <UserContext.Provider value={{ user, isLoggedIn: !!user, refetch, logout }}>
       {children}
     </UserContext.Provider>
   );
