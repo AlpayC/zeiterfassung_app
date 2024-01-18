@@ -33,7 +33,7 @@ export default function Popup({ errorDescription, messageType, title }) {
           <strong className="block font-medium text-2xl text-gray-900">
             {messageType === "error"
               ? `${title} fehlgeschlagen`
-              : `${title} erfolgreich`}
+              : `${title} erfolgreich abgeschlossen`}
           </strong>
 
           <p className="mt-1 text-2xl text-gray-700">{errorDescription}</p>
