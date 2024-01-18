@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const useTimeTracking = (user) => {
   const [isTracking, setIsTracking] = useState(false);
+  const [statusText, setStatusText] = useState("Starte die Zeit");
 
   const startTracking = async () => {
     try {
@@ -14,6 +15,10 @@ const useTimeTracking = (user) => {
 
       if (response.status === 201) {
         setIsTracking(true);
+        sessionStorage.setItem("timeTrackingToken", new Date().toISOString());
+        setStatusText(
+          "Deine Zeiterfassung läuft aktuell..Stoppe deine Zeit, wenn du fertig bist"
+        );
       } else {
         console.error(`Error starting time tracking: ${response.data}`);
       }
@@ -38,12 +43,27 @@ const useTimeTracking = (user) => {
       });
 
       setIsTracking(false);
+      sessionStorage.removeItem("timeTrackingToken");
+      setStatusText(
+        "Deine Zeiterfassung wurde beendet und eine Email wurde an das Personalbüro versendet"
+      );
     } catch (error) {
       console.error("Error stopping time tracking:", error.message);
     }
   };
 
-  return { isTracking, startTracking, stopTracking };
+  useEffect(() => {
+    const timeTrackingToken = sessionStorage.getItem("timeTrackingToken");
+
+    if (timeTrackingToken) {
+      setIsTracking(true);
+      setStatusText(
+        "Deine Zeiterfassung läuft aktuell..Stoppe deine Zeit, wenn du fertig bist"
+      );
+    }
+  }, []);
+
+  return { isTracking, startTracking, stopTracking, statusText };
 };
 
 export default useTimeTracking;
