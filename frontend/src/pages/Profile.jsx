@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "react-calendar/dist/Calendar.css";
 import { UserContext } from "../user/UserContext";
-import BackButton from "../components/BackButton";
+import BackButton from "../components/ui/buttons/BackButton";
 import TrackingCalendar from "../timeTracking/TrackingCalendar";
 
 export default function Profile() {

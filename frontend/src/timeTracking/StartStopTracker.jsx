@@ -1,17 +1,23 @@
-import { FaPlayCircle, FaStop } from "react-icons/fa";
 import useTimeTracking from "../hooks/useTimeTracking";
+import TrackerButton from "../components/ui/buttons/TrackerButton";
 
 export default function StartStopTracker({ user }) {
   const { isTracking, startTracking, stopTracking } = useTimeTracking(user);
 
   return (
     <div className="flex flex-row gap-12 justify-center items-center">
-      <button onClick={startTracking} disabled={isTracking}>
-        <FaPlayCircle />
-      </button>
-      <button onClick={stopTracking} disabled={!isTracking}>
-        <FaStop />
-      </button>
+      <TrackerButton
+        type={"submit"}
+        label={"Start"}
+        onClick={startTracking}
+        disabled={isTracking}
+      />
+      <TrackerButton
+        type={"submit"}
+        label={"Stop"}
+        onClick={stopTracking}
+        disabled={!isTracking}
+      />
     </div>
   );
 }

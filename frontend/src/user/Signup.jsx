@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import InputFieldSignup from "../components/ui/inputFields/InputFieldSignup";
+import Popup from "../components/Popup";
+import FormButton from "../components/ui/buttons/FormButton";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -33,12 +36,31 @@ export default function Signup() {
       onSubmit={submit}
       className="gap-6 flex flex-col items-center justify-center my-12"
     >
-      <input name="name" type="text" placeholder="Dein Name" />
-      <input name="lastname" type="text" placeholder="Dein Nachname" />
-      <input name="email" type="text" placeholder="Deine Email" />
-      <input name="password" type="password" placeholder="***********" />
-      {error && <small style={{ color: "red" }}>{error}</small>}
-      <button>Signup</button>
+      <InputFieldSignup name={"name"} type={"text"} placeholder={"Dein Name"} />
+      <InputFieldSignup
+        name={"lastname"}
+        type={"text"}
+        placeholder={"Dein Nachname"}
+      />
+      <InputFieldSignup
+        name={"email"}
+        type={"email"}
+        placeholder={"Deine Email"}
+      />
+      <InputFieldSignup
+        name={"password"}
+        type={"password"}
+        placeholder={"***********"}
+      />
+
+      {error && (
+        <Popup
+          errorDescription={error}
+          messageType={"error"}
+          title={"Registrierung"}
+        />
+      )}
+      <FormButton label={"Signup"} type={"submit"} />
     </form>
   );
 }
