@@ -46,24 +46,18 @@ p {
   font-size: 1.6rem;
   line-height: 120%;
 }
-button {
+/* button {
   font-size: 2rem;
-}
+} */
 .react-calendar__tile--active {
   background: #006edc;
   color: white;
 }
-abbr,
-input {
+abbr {
   font-size: 1.6rem;
 }
 
-input {
-  border: 1px solid black;
-  padding: 1rem 2rem 1rem;
-  border-radius: 2rem;
-}
-button {
+/* button {
   padding: 1rem 2rem 1rem;
   color: white;
   background-color: red;
@@ -71,10 +65,7 @@ button {
 }
 button[type="button"] {
   background-color: black;
-}
+} */
 small {
-  font-size: 1.6rem;
-}
-span {
   font-size: 1.6rem;
 }
