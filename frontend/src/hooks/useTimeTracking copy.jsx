@@ -1,27 +1,38 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { formatTime } from "../utils/formatDate";
-
-const useTimeTracking = (user) => {
+import { useContext } from "react";
+import { UserContext } from "../user/UserContext";
+import { formatTime, convertUtcToGermanTime } from "../utils/formatDate";
+const useTimeTracking = () => {
   const [isTracking, setIsTracking] = useState(false);
   const [statusText, setStatusText] = useState("Starte die Zeit");
   const [documentTitle, setDocumentTitle] = useState(document.title);
   const [prevDocumentTitle] = useState(documentTitle);
-  const [startDate, setStartDate] = useState(null);
-  const [shouldRefetch, setShouldRefetch] = useState(true);
-
-  const refetch = () => setShouldRefetch((prev) => !prev);
-
+  const [startDate, setStartDate] = useState([]);
+  const { user } = useContext(UserContext);
   const startTracking = async () => {
     try {
+      const userEmail = user.email;
       const response = await axios.post("/api/timeTracking/addStartTime", {
-        email: user.email,
+        email: userEmail,
         date: new Date(),
         startTime: new Date().toISOString(),
       });
 
       if (response.status === 201) {
-        refetch();
+        setIsTracking(true);
+        // sessionStorage.setItem("timeTrackingToken", new Date().toISOString());
+
+        setStatusText(
+          "Deine Zeiterfassung läuft aktuell..Stoppe deine Zeit, wenn du fertig bist"
+        );
+        // const timeTrackingToken = sessionStorage.getItem("timeTrackingToken");
+
+        setDocumentTitle(
+          (document.title = `Zeit läuft seit: ${formatTime(
+            new Date(startDate.startTimes)
+          )}`)
+        );
       } else {
         console.error(`Error starting time tracking: ${response.data}`);
       }
@@ -46,6 +57,7 @@ const useTimeTracking = (user) => {
       });
 
       setIsTracking(false);
+      sessionStorage.removeItem("timeTrackingToken");
       setDocumentTitle((document.title = prevDocumentTitle));
       setStatusText(
         "Deine Zeiterfassung wurde beendet und eine Email wurde an das Personalbüro versendet"
@@ -57,53 +69,42 @@ const useTimeTracking = (user) => {
   };
 
   useEffect(() => {
-    const fetchSessionActivity = async () => {
-      try {
-        if (user && user.email) {
+    // const timeTrackingToken = sessionStorage.getItem("timeTrackingToken");
+
+    if (isTracking) {
+      const getSessionActivity = async () => {
+        try {
           const response = await axios.post(
             "/api/timeTracking/getTimeTrackingActivity",
+
             {
               email: user.email,
               date: new Date(),
             }
           );
-          if (response && response.data) {
-            setStartDate(response.data.startTimes);
-            setIsTracking(true);
+          console.log(response);
+          setIsTracking(true);
 
-            setStatusText(
-              "Deine Zeiterfassung läuft aktuell. Stoppe deine Zeit, wenn du fertig bist."
-            );
-            setDocumentTitle(
-              (document.title = `Zeit läuft seit: ${formatTime(
-                new Date(response.data.startTimes)
-              )}`)
-            );
-          } else {
-            setStartDate(null);
-          }
-        } else {
-          setStartDate(null);
+          setStatusText(
+            "Deine Zeiterfassung läuft aktuell. Stoppe deine Zeit, wenn du fertig bist."
+          );
+          setDocumentTitle(
+            (document.title = `Zeit läuft seit: ${formatTime(
+              new Date(response.data.startTimes)
+            )}`)
+          );
+          setStartDate(response.data);
+        } catch (error) {
+          console.error("Error getting time tracking activity:", error.message);
         }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setStartDate(null);
-      }
-    };
-    if (shouldRefetch) {
-      fetchSessionActivity();
-      setShouldRefetch(false);
+      };
+      getSessionActivity();
+    } else {
+      console.log("keine aktivität");
     }
-  }, [shouldRefetch, user]);
+  }, []);
 
-  return {
-    isTracking,
-    startTracking,
-    stopTracking,
-    statusText,
-    startDate,
-    refetch,
-  };
+  return { isTracking, startTracking, stopTracking, statusText, startDate };
 };
 
 export default useTimeTracking;

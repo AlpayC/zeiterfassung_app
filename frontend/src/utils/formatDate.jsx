@@ -7,3 +7,10 @@ export const formatTime = (date) => {
   const minutes = date.getMinutes().toString().padStart(2, "0");
   return `${hours}:${minutes}`;
 };
+export const convertUtcToGermanTime = (date) => {
+  const utcDateTime = new Date(date);
+  const germanDateTime = new Date(utcDateTime);
+  germanDateTime.setHours(germanDateTime.getHours() + 1);
+
+  return germanDateTime.toISOString();
+};
