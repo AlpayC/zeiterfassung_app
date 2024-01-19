@@ -193,3 +193,39 @@ timeTrackingRouter.post(
     }
   }
 );
+timeTrackingRouter.post(
+  "/getTimeTrackingActivity",
+  authenticateToken,
+  async (req, res) => {
+    try {
+      const { email, date } = req.body;
+      const user = await User.findOne({ email: email.toLowerCase() });
+      if (!user) {
+        return res.status(404).send("User nicht gefunden");
+      }
+
+      if (user.email !== email.toLowerCase()) {
+        return res.status(403).send("Forbidden");
+      }
+
+      const existingTimeEntry = await TimeTracking.findOne({
+        employee: user._id,
+        date: {
+          $gte: new Date(date).setUTCHours(0, 0, 0, 0),
+        },
+        $or: [{ endTimes: { $eq: null } }, { endTimes: { $size: 0 } }],
+      });
+      if (!existingTimeEntry) {
+        return res
+          .status(204)
+          .header("X-Info", "Kein Zeitverfolgungseintrag ohne Endzeit gefunden")
+          .send();
+      }
+
+      res.status(200).json(existingTimeEntry);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
