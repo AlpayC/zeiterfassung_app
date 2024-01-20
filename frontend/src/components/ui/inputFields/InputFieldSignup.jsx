@@ -9,8 +9,7 @@ export default function InputFieldSignup({ name, placeholder, type }) {
       className="block overflow-hidden rounded-md border  text-left border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 w-1/4"
     >
       <span className="text-xl  font-medium text-gray-700">
-        {" "}
-        {capitalizedName}{" "}
+        {capitalizedName}
       </span>
 
       <input

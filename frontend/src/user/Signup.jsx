@@ -2,8 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputFieldSignup from "../components/ui/inputFields/InputFieldSignup";
-import Popup from "../components/Popup";
 import FormButton from "../components/ui/buttons/FormButton";
+import Alert from "../components/ui/alerts/Alert";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -54,8 +54,8 @@ export default function Signup() {
       />
 
       {error && (
-        <Popup
-          errorDescription={error}
+        <Alert
+          description={error}
           messageType={"error"}
           title={"Registrierung"}
         />

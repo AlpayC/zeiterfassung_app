@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../components/ui/inputFields/InputFieldLogin";
 import { UserContext } from "./UserContext";
 import FormButton from "../components/ui/buttons/FormButton";
-import Popup from "../components/Popup";
+import Alert from "../components/ui/alerts/Alert";
 
 export default function Login() {
   const { refetch } = useContext(UserContext);
@@ -22,7 +22,6 @@ export default function Login() {
       refetch();
       navigate("/tracker");
     } catch (e) {
-      // console.log(e);
       setError(
         `${e.response?.data.message}: ${e.response?.data.error.message}`
       );
@@ -38,9 +37,7 @@ export default function Login() {
       <InputField name="password" type="password" placeholder="***********" />
 
       <FormButton label={"Login"} type={"submit"} />
-      {error && (
-        <Popup errorDescription={error} messageType={"error"} title={"Login"} />
-      )}
+      {error && <Alert description={error} messageType={"error"} />}
     </form>
   );
 }
