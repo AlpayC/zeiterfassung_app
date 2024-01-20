@@ -4,25 +4,33 @@ import Signup from "./user/Signup";
 import Login from "./user/Login";
 import Profile from "./pages/Profile";
 import Tracker from "./pages/Tracker";
-import "./App.css";
+import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./user/ResetPassword";
-import NavBar from "./components/NavBar";
+import LayoutContainer from "./components/LayoutContainer";
+import { UserContext } from "./user/UserContext";
+import { useContext } from "react";
 
 function App() {
+  const { isLoggedIn } = useContext(UserContext);
   return (
-    <>
-      <NavBar />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/passwordReset" element={<ResetPassword />} />
-          <Route path="/tracker" element={<Tracker />} />
-        </Routes>
-      </main>
-    </>
+    <LayoutContainer>
+      <Routes>
+        {isLoggedIn ? (
+          <>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/tracker" element={<Tracker />} />
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/passwordReset" element={<ResetPassword />} />
+          </>
+        )}
+      </Routes>
+    </LayoutContainer>
   );
 }
 

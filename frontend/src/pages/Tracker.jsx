@@ -6,9 +6,9 @@ export default function Profile() {
   const { user } = useContext(UserContext);
 
   return (
-    <>
+    <main>
       <h1>Zeiterfassung</h1>
       <StartStopTracker user={user} />
-    </>
+    </main>
   );
 }

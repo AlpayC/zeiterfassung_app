@@ -8,7 +8,7 @@ export default function Profile() {
   const { isLoggedIn } = useContext(UserContext);
 
   return (
-    <>
+    <main>
       <h1>Zeiterfassung Übersicht</h1>
       <BackButton label={"Zurück zur Zeiterfassung"} link={"/tracker"} />
       {isLoggedIn ? (
@@ -21,6 +21,6 @@ export default function Profile() {
           </h2>
         </div>
       )}
-    </>
+    </main>
   );
 }
