@@ -37,7 +37,7 @@ export default function Login() {
       <InputField name="password" type="password" placeholder="***********" />
 
       <FormButton label={"Login"} type={"submit"} />
-      {error && <Alert description={error} messageType={"error"} />}
+      {error && <Alert description={error} alertType={"alert-error"} />}
     </form>
   );
 }

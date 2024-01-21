@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export default function NotLoggedInArea({ navLinks }) {
   return (
     <>
@@ -5,7 +7,7 @@ export default function NotLoggedInArea({ navLinks }) {
         <ul className="menu menu-horizontal px-1">
           {navLinks.map((link, index) => (
             <li key={index}>
-              <a href={link.path}>{link.label}</a>
+              <NavLink to={link.path}>{link.label}</NavLink>
             </li>
           ))}
         </ul>

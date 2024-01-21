@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import MenuBadge from "./MenuBadge";
 import UserAvatar from "./UserAvatar";
 
@@ -11,10 +12,10 @@ export default function UserDropDown({ user, links }) {
       >
         {links.map((link, index) => (
           <li key={index}>
-            <a href={link.path} onClick={link.onClick}>
+            <Link to={link.path} onClick={link.onClick}>
               {link.label}
               {link.badge && <MenuBadge label={link.badge} />}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
