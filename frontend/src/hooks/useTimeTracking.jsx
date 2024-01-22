@@ -19,7 +19,6 @@ const useTimeTracking = (user) => {
         date: new Date(),
         startTime: new Date().toISOString(),
       });
-
       if (response.status === 201) {
         refetch();
       } else {
@@ -37,20 +36,19 @@ const useTimeTracking = (user) => {
         email: user.email,
         date: new Date(),
       });
-
       await axios.post("/api/timeTracking/sendEmailToHr", {
         startTime: new Date(response.data.startTimes),
         endTime: new Date(response.data.endTimes),
         email: user.email,
         date: new Date(),
       });
-
       setIsTracking(false);
       setDocumentTitle((document.title = prevDocumentTitle));
       setStatusText(
         "Deine Zeiterfassung wurde beendet und eine Email wurde an das Personalbüro versendet"
       );
       setStartDate(null);
+      refetch();
     } catch (error) {
       console.error("Error stopping time tracking:", error.message);
     }
@@ -90,10 +88,8 @@ const useTimeTracking = (user) => {
         setStartDate(null);
       }
     };
-    if (shouldRefetch) {
-      fetchSessionActivity();
-      setShouldRefetch(false);
-    }
+
+    fetchSessionActivity();
   }, [shouldRefetch, user]);
 
   return {

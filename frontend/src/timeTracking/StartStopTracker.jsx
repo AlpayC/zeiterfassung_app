@@ -1,23 +1,12 @@
 import useTimeTracking from "../hooks/useTimeTracking";
 import TrackerButton from "../components/ui/buttons/TrackerButton";
-// import Popup from "../components/Popup";
 import { formatDate, formatTime } from "../utils/formatDate";
-import { useEffect } from "react";
+
 export default function StartStopTracker({ user }) {
-  const {
-    isTracking,
-    startTracking,
-    stopTracking,
-    statusText,
-    startDate,
-    refetch,
-  } = useTimeTracking(user);
+  const { isTracking, startTracking, stopTracking, statusText, startDate } =
+    useTimeTracking(user);
   const startedTime = formatTime(new Date(startDate));
   const startedDate = formatDate(new Date(startDate));
-
-  useEffect(() => {
-    refetch();
-  }, []);
 
   return (
     <section className="flex flex-col gap-12 mt-12">

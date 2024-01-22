@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./user/Signup";
 import Login from "./user/Login";
@@ -8,27 +8,100 @@ import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./user/ResetPassword";
 import LayoutContainer from "./components/LayoutContainer";
 import { UserContext } from "./user/UserContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function App() {
   const { isLoggedIn } = useContext(UserContext);
+  const [online, setOnline] = useState(isLoggedIn);
+  useEffect(() => {
+    setOnline(isLoggedIn);
+  }, [isLoggedIn, online]);
   return (
     <LayoutContainer>
       <Routes>
-        {isLoggedIn ? (
-          <>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/tracker" element={<Tracker />} />
-          </>
-        ) : (
-          <>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/passwordReset" element={<ResetPassword />} />
-          </>
-        )}
+        <>
+          <Route
+            exact
+            path="/dashboard"
+            element={
+              online ? (
+                <Dashboard />
+              ) : (
+                <>
+                  <Navigate to={"/login"} />
+                  <Login />
+                </>
+              )
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              online ? (
+                <Profile />
+              ) : (
+                <>
+                  <Navigate to={"/login"} />
+                  <Login />
+                </>
+              )
+            }
+          />
+          <Route
+            path="/tracker"
+            element={
+              online ? (
+                <Tracker />
+              ) : (
+                <>
+                  <Navigate to={"/login"} />
+                  <Login />
+                </>
+              )
+            }
+          />
+
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/signup"
+            element={
+              online ? (
+                <Navigate to={"/dashboard"} />
+              ) : (
+                <>
+                  <Navigate to={"/signup"} />
+                  <Signup />
+                </>
+              )
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              online ? (
+                <Navigate to={"/dashboard"} />
+              ) : (
+                <>
+                  <Navigate to={"/login"} />
+                  <Login />
+                </>
+              )
+            }
+          />
+          <Route
+            path="/passwordReset"
+            element={
+              online ? (
+                <Navigate to={"/dashboard"} />
+              ) : (
+                <>
+                  <Navigate to={"/passwordReset"} />
+                  <ResetPassword />
+                </>
+              )
+            }
+          />
+        </>
       </Routes>
     </LayoutContainer>
   );

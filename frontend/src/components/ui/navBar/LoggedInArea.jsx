@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import UserDropDown from "./UserDropDown";
 
 export default function LoggedInArea({
@@ -12,7 +13,7 @@ export default function LoggedInArea({
         <ul className="menu menu-horizontal px-1">
           {navLinks.map((link, index) => (
             <li key={index}>
-              <a href={link.path}>{link.label}</a>
+              <Link to={link.path}>{link.label}</Link>
             </li>
           ))}
         </ul>
