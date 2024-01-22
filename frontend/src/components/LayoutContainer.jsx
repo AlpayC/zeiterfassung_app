@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import NavBar from "../components/ui/navBar/NavBar";
 import { UserContext } from "../user/UserContext";
-import SideBar from "./ui/sideBar/sideBar";
+import SideBar from "./ui/sideBar/SideBar";
 
 const LayoutContainer = ({ children }) => {
   const { isLoggedIn } = useContext(UserContext);
