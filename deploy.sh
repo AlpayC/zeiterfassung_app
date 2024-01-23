@@ -1,5 +1,4 @@
 #!/bin/bash
-cd /frontend
 /usr/local/bin/npm install
 cd ./frontend
 /usr/local/bin/npm run build
