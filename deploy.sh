@@ -1,9 +1,8 @@
 #!/bin/bash
-cd /frontend
-npm install
+/usr/local/bin/npm install
 cd ./frontend
-npm run build
+/usr/local/bin/npm run build
 cd ..
 
 cd ./backend
-npm install
+/usr/local/bin/npm/npm install
