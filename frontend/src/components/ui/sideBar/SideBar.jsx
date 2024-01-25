@@ -2,21 +2,78 @@ import { useContext } from "react";
 import { UserContext } from "../../../user/UserContext";
 import Logo from "../logo/Logo";
 import SideMenu from "./SideMenu";
-import { TbHome, TbClockCheck, TbCalendar } from "react-icons/tb";
+import {
+  TbHome,
+  TbClockCheck,
+  TbCalendar,
+  TbMessage,
+  TbSchool,
+  TbHeart,
+  TbPlane,
+  TbBriefcase,
+} from "react-icons/tb";
+import AddButton from "./AddButton";
 
 export default function SideBar() {
   const { isLoggedIn } = useContext(UserContext);
-  const sideMenuLinks = [
-    { label: "Dashboard", path: "/dashboard", icon: <TbHome /> },
-    { label: "Zeiterfassung", path: "/tracker", icon: <TbClockCheck /> },
-    { label: "Kalender", path: "/profile", icon: <TbCalendar /> },
+  const sideMenuLinksGeneral = [
+    {
+      label: "Dashboard",
+      path: "/dashboard",
+      icon: <TbHome className="text-2xl" />,
+    },
+    {
+      label: "Zeiterfassung",
+      path: "/tracker",
+      icon: <TbClockCheck className="text-2xl" />,
+    },
+    {
+      label: "Kalender",
+      path: "/profile",
+      icon: <TbCalendar className="text-2xl" />,
+    },
+    {
+      label: "Nachrichten",
+      path: "/messages",
+      icon: <TbMessage className="text-2xl" />,
+    },
+  ];
+  const sideMenuLinksTasks = [
+    {
+      label: "Inbox",
+      path: "/tasks/inbox",
+      icon: <TbHome className="text-2xl" />,
+    },
+    {
+      label: "Arbeit",
+      path: "/tasks/work",
+      icon: <TbBriefcase className="text-2xl" />,
+    },
+    {
+      label: "Studium",
+      path: "/tasks/study",
+      icon: <TbSchool className="text-2xl" />,
+    },
+    {
+      label: "Gesundheit",
+      path: "/tasks/health",
+      icon: <TbHeart className="text-2xl" />,
+    },
+    {
+      label: "Reise",
+      path: "/tasks/holiday",
+      icon: <TbPlane className="text-2xl" />,
+    },
   ];
   return (
     <>
       {isLoggedIn && (
         <div className="h-screen w-max px-6 bg-base-300 sidebar py-5">
           <Logo />
-          <SideMenu links={sideMenuLinks} />
+          <SideMenu links={sideMenuLinksGeneral} />
+          <AddButton label={"Meine Listen"} />
+          <SideMenu links={sideMenuLinksTasks} />
+          <AddButton label={"Meine Workspaces"} />
         </div>
       )}
     </>

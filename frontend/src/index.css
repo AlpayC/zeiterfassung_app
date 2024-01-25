@@ -25,3 +25,60 @@ main {
   flex: 1;
   overflow-y: auto;
 }
+@font-face {
+  font-family: "Poppins-Regular";
+  src: url("./assets/fonts/Poppins-Medium.ttf");
+}
+@font-face {
+  font-family: "Poppins-Bold";
+  src: url("./assets/fonts/Poppins-Bold.ttf");
+}
+@font-face {
+  font-family: "Poppins-SemiBold";
+  src: url("./assets/fonts/Poppins-SemiBold.ttf");
+}
+
+h1 {
+  font-family: "Poppins-Bold";
+}
+
+h2 {
+  font-family: "Poppins-SemiBold";
+}
+
+a,
+button,
+option,
+select,
+input,
+p,
+span {
+  font-family: "Poppins-Regular";
+}
+.card.image-full:before {
+  opacity: 0.25;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  height: 90vh;
+}
+.focus-timer-box {
+  grid-area: 4 / 8 / 7 / 11;
+}
+.calender-box {
+  grid-area: 1 / 8 / 4 / 11;
+}
+.greetings-box {
+  grid-area: 1 / 1 / 4 / 8;
+}
+.task-box {
+  grid-area: 4 / 1 / 5 / 8;
+}
+
+.todays-tasks-box {
+  grid-area: 5 / 1 / 7 / 8;
+}
