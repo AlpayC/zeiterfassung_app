@@ -2,7 +2,11 @@ import { useEffect } from "react";
 
 import CircleButton from "../../ui/buttons/CircleButton";
 import { FaMinus, FaPlus } from "react-icons/fa";
-export default function TimeAdjustmentComp({ focusTime, setFocusTime }) {
+export default function TimeAdjustmentComp({
+  focusTime,
+  setFocusTime,
+  isTracking,
+}) {
   const adjustMinutes = (direction) => {
     if (direction === "down") {
       if (focusTime <= 15) {
@@ -25,9 +29,17 @@ export default function TimeAdjustmentComp({ focusTime, setFocusTime }) {
   }, [focusTime]);
   return (
     <div className="card-actions flex justify-center items-center gap-6">
-      <CircleButton icon={<FaMinus />} onClick={() => adjustMinutes("down")} />
+      <CircleButton
+        icon={<FaMinus />}
+        onClick={() => adjustMinutes("down")}
+        disabled={isTracking}
+      />
       <p className="text-3xl text-center flex-grow-0">{focusTime} min</p>
-      <CircleButton icon={<FaPlus />} onClick={() => adjustMinutes("up")} />
+      <CircleButton
+        icon={<FaPlus />}
+        onClick={() => adjustMinutes("up")}
+        disabled={isTracking}
+      />
     </div>
   );
 }
