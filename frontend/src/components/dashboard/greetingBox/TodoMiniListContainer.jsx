@@ -22,9 +22,9 @@ export default function TodoMiniListContainer() {
     },
   ];
   return (
-    <div className="card w-96 bg-base-300  ">
+    <div className="card w-96 bg-base-100  ">
       <div className="card-body">
-        <h2 className="card-title">Demnächst</h2>
+        <h2 className="card-title text-primary">Demnächst</h2>
         <div className="overflow-y-auto h-28 ">
           {nextTodos.map((nextTodo, index) => {
             return <ToDoMiniListItem nextTodo={nextTodo} key={index} />;

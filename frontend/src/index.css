@@ -60,17 +60,17 @@ span {
 }
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(15, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 5px;
   grid-row-gap: 5px;
   height: 90vh;
 }
 .focus-timer-box {
-  grid-area: 4 / 8 / 7 / 11;
+  grid-area: 4 / 8 / 7 / 14;
 }
 .calender-box {
-  grid-area: 1 / 8 / 4 / 11;
+  grid-area: 1 / 8 / 4 / 14;
 }
 .greetings-box {
   grid-area: 1 / 1 / 4 / 8;
@@ -81,4 +81,19 @@ span {
 
 .todays-tasks-box {
   grid-area: 5 / 1 / 7 / 8;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
