@@ -1,22 +1,14 @@
-import { Link } from "react-router-dom";
 import UserDropDown from "./UserDropDown";
 
 export default function LoggedInArea({
   user,
   logout,
-  navLinks,
+
   dropDownLinks,
 }) {
   return (
     <>
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
-          {navLinks.map((link, index) => (
-            <li key={index}>
-              <Link to={link.path}>{link.label}</Link>
-            </li>
-          ))}
-        </ul>
         <ul className="menu bg-base-200 lg:menu-horizontal rounded-box">
           <li>
             <a>
