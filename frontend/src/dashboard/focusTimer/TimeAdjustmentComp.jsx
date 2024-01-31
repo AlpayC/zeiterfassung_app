@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import CircleButton from "../../ui/buttons/CircleButton";
+import CircleButton from "../../components/ui/buttons/CircleButton";
 import { FaMinus, FaPlus } from "react-icons/fa";
 export default function TimeAdjustmentComp({
   focusTime,

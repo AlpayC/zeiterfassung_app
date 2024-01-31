@@ -21,12 +21,14 @@ export default function TodoMiniListContainer() {
       color: "bg-green-500",
     },
   ];
+  const firstTwoTodos = nextTodos.slice(0, 2);
+
   return (
-    <div className="card w-96 bg-base-100  ">
-      <div className="card-body">
+    <div className="card w-96  bg-base-100 rounded-2xl ">
+      <div className="card-body p-5">
         <h2 className="card-title text-primary">Demnächst</h2>
-        <div className="overflow-y-auto h-28 ">
-          {nextTodos.map((nextTodo, index) => {
+        <div className="overflow-hidden h-28 ">
+          {firstTwoTodos.map((nextTodo, index) => {
             return <ToDoMiniListItem nextTodo={nextTodo} key={index} />;
           })}
         </div>

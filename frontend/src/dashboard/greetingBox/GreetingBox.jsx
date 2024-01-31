@@ -1,9 +1,9 @@
 import ToDoCounter from "./ToDoCounter";
 import TodoMiniListContainer from "./TodoMiniListContainer";
-import landscapeMountains from "../../../assets/img/landscape-mountains.jpg";
+import landscapeMountains from "../../assets/img/landscape-mountains.jpg";
 export default function GreetingBox({ userName, todosNumber, nextTodos }) {
   return (
-    <article className="card bg-base-300 shadow-xl image-full p-2 greetings-box">
+    <article className="card bg-base-300 shadow-xl image-full p-2 greetings-box rounded-2xl">
       <figure>
         <img
           src={landscapeMountains}

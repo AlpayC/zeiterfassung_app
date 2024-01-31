@@ -1,14 +1,16 @@
-import useCountDown from "../../../hooks/useCountDown";
+import useCounter from "../../../hooks/useCounter";
 
-export default function CountDownDisplay({
-  countDown,
-  setCountDown,
+export default function CounterDisplay({
+  countValue,
+  setCountValue,
   isTracking,
+  direction,
 }) {
-  const { hoursCounter, secondsCounter, minutesCounter } = useCountDown({
-    countDown,
-    setCountDown,
+  const { hoursCounter, secondsCounter, minutesCounter } = useCounter({
+    countValue,
+    setCountValue,
     isTracking,
+    direction,
   });
 
   return (

@@ -1,6 +1,6 @@
 export default function Searchbar() {
   return (
-    <div className="join flex-1">
+    <div className="join flex-1 rounded-2xl">
       <div>
         <div>
           <input
