@@ -18,7 +18,7 @@ export default function NavBar() {
   ];
   return (
     <>
-      <nav className="navbar bg-base-100 ">
+      <nav className="navbar bg-base-100  flex gap-4">
         {isLoggedIn ? <Searchbar /> : <Logo />}
 
         {!isLoggedIn && <NotLoggedInArea navLinks={notLoggedInLinks} />}

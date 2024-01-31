@@ -9,6 +9,7 @@ import ResetPassword from "./user/ResetPassword";
 import LayoutContainer from "./components/LayoutContainer";
 import { UserContext } from "./user/UserContext";
 import { useContext, useEffect, useState } from "react";
+import Projects from "./pages/Projects";
 
 function App() {
   const { isLoggedIn } = useContext(UserContext);
@@ -52,6 +53,32 @@ function App() {
             element={
               online ? (
                 <Tracker />
+              ) : (
+                <>
+                  <Navigate to={"/login"} />
+                  <Login />
+                </>
+              )
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              online ? (
+                <Projects />
+              ) : (
+                <>
+                  <Navigate to={"/login"} />
+                  <Login />
+                </>
+              )
+            }
+          />
+          <Route
+            path="/ho"
+            element={
+              online ? (
+                <Projects />
               ) : (
                 <>
                   <Navigate to={"/login"} />

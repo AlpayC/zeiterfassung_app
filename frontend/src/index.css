@@ -1,8 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 .layout-container {
-  height: 100vh;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
@@ -61,9 +61,9 @@ span {
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
   height: 90vh;
 }
 .focus-timer-box {
@@ -83,7 +83,7 @@ span {
   grid-area: 5 / 1 / 7 / 8;
 }
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 1px;
 }
 
 ::-webkit-scrollbar-track {
@@ -96,4 +96,43 @@ span {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+@media screen and (max-width: 1400px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: auto;
+    height: auto;
+  }
+
+  .focus-timer-box,
+  .calender-box,
+  .greetings-box,
+  .task-box,
+  .todays-tasks-box {
+    grid-area: auto;
+  }
+}
+.card.image-full:before {
+  border-radius: 1rem;
+}
+.icon-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 30px; /* Adjust the left positioning as needed */
+  transform: translateY(-140%);
+}
+.react-calendar abbr {
+  font-size: 1.2rem;
+}
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus,
+.react-calendar__navigation button:enabled:hover {
+  background-color: blue;
+}
+.react-calendar__month-view__weekdays {
+  text-transform: unset;
+  text-decoration: none;
+}
+.react-calendar__month-view__weekdays abbr {
+  text-decoration: none;
 }

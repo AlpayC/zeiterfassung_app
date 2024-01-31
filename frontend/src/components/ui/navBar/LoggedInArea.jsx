@@ -8,8 +8,8 @@ export default function LoggedInArea({
 }) {
   return (
     <>
-      <div className="flex-none">
-        <ul className="menu bg-base-200 lg:menu-horizontal rounded-box">
+      <div className="flex-none ">
+        <ul className="menu bg-base-200 lg:menu-horizontal rounded-2xl">
           <li>
             <a>
               <svg

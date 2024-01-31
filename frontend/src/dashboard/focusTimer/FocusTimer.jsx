@@ -1,11 +1,10 @@
-import landscapeNight from "../../../assets/img/landscape-night.jpg";
+import landscapeNight from "../../assets/img/landscape-night.jpg";
 import { useState, useEffect } from "react";
-import TrackerButton from "../../../components/ui/buttons/TrackerButton";
+import TrackerButton from "../../components/ui/buttons/TrackerButton";
 import TimeAdjustmentComp from "./TimeAdjustmentComp";
-import CountDownDisplay from "./CountDownDisplay";
+import CounterDisplay from "../../components/ui/counter/CounterDisplay";
 
-export default function FocusTimer({ user }) {
-  // const { isTracking, startTracking, stopTracking } = useTimeTracking(user);
+export default function FocusTimer() {
   const [focusTime, setFocusTime] = useState(30);
   const [isTracking, setIsTracking] = useState(false);
   const [countDown, setCountDown] = useState();
@@ -39,10 +38,11 @@ export default function FocusTimer({ user }) {
           setFocusTime={setFocusTime}
           isTracking={isTracking}
         />
-        <CountDownDisplay
+        <CounterDisplay
           isTracking={isTracking}
-          countDown={countDown}
-          setCountDown={setCountDown}
+          countValue={countDown}
+          setCountValue={setCountDown}
+          direction={"down"}
         />
         <div className="flex flex-row gap-12 justify-center items-center">
           {isTracking ? (
