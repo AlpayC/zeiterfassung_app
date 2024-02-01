@@ -85,7 +85,6 @@ userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
 userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
   const { email, password } = req.body;
   console.log({ email, password });
-
   try {
     const user = await User.findOne({ email }).select("+hash").select("+salt");
 
@@ -101,7 +100,14 @@ userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
           maxAge: hoursInMillisec(4),
         });
 
-        res.send({ message: "Success", data: user });
+        res.send({
+          message: "Success",
+          data: user,
+          success: {
+            message:
+              "Login erfolgreich. Du wirst nun auf die Startseite weitergeleitet.",
+          },
+        });
       } else {
         res.status(404).send({
           message: "Login fehlgeschlagen",
@@ -110,6 +116,13 @@ userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
           },
         });
       }
+    } else if (!email | !password) {
+      res.status(404).send({
+        message: "Login fehlgeschlagen",
+        error: {
+          message: "Keine Logindaten eingegeben.",
+        },
+      });
     } else {
       res.status(404).send({
         message: "Login fehlgeschlagen",
