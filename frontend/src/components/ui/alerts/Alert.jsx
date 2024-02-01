@@ -1,22 +1,30 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 
-export default function Alert({ description, alertType }) {
-  const [show, setShow] = useState(true);
-
+import { AlertContext } from "../../../context/AlertContext";
+export default function Alert() {
+  const { alertState, hideAlert } = useContext(AlertContext);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShow(false);
-    }, 1500);
+    if (alertState) {
+      console.log(alertState);
+      const timer = setTimeout(() => {
+        hideAlert();
+      }, alertState.duration);
 
-    return () => clearTimeout(timer);
-  }, []);
+      return () => clearTimeout(timer);
+    }
+  }, [alertState, hideAlert]);
+
+  if (!alertState) {
+    return null;
+  }
+
+  const { description, alertType } = alertState;
+
   return (
     <>
       <div
         role="alert"
-        className={`w-max alert ${alertType} absolute top-12 right-10 transition-all  duration-500 ${
-          show ? "opacity-100 " : "opacity-0"
-        } `}
+        className={`w-max alert ${alertType} absolute top-16 right-6 transition-all z-50`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
