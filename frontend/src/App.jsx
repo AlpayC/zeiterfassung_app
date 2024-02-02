@@ -18,6 +18,7 @@ function App() {
   useEffect(() => {
     setOnline(isLoggedIn);
   }, [isLoggedIn, online]);
+
   return (
     <LayoutContainer>
       <Routes>
