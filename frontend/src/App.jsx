@@ -4,6 +4,7 @@ import Signup from "./user/Signup";
 import Login from "./user/Login";
 import Profile from "./pages/Profile";
 import Tracker from "./pages/Tracker";
+import BigCalendar from "./pages/BigCalendar";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./user/ResetPassword";
 import LayoutContainer from "./components/LayoutContainer";
@@ -17,6 +18,7 @@ function App() {
   useEffect(() => {
     setOnline(isLoggedIn);
   }, [isLoggedIn, online]);
+
   return (
     <LayoutContainer>
       <Routes>
@@ -75,10 +77,10 @@ function App() {
             }
           />
           <Route
-            path="/ho"
+            path="/calendar"
             element={
               online ? (
-                <Projects />
+                <BigCalendar />
               ) : (
                 <>
                   <Navigate to={"/login"} />
