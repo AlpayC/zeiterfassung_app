@@ -5,6 +5,7 @@ import Login from "./user/Login";
 import Profile from "./pages/Profile";
 import Tracker from "./pages/Tracker";
 import BigCalendar from "./pages/BigCalendar";
+import Messages from "./pages/Messages";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./user/ResetPassword";
 import LayoutContainer from "./components/LayoutContainer";
@@ -14,9 +15,19 @@ import Projects from "./pages/Projects";
 
 function App() {
   const { isLoggedIn } = useContext(UserContext);
+
   const [online, setOnline] = useState(isLoggedIn);
   useEffect(() => {
     setOnline(isLoggedIn);
+    const handleBeforeUnload = () => {
+      localStorage.setItem("lastVisitedPage", window.location.pathname);
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, [isLoggedIn, online]);
 
   return (
@@ -89,8 +100,36 @@ function App() {
               )
             }
           />
+          <Route
+            path="/messages"
+            element={
+              online ? (
+                <Messages />
+              ) : (
+                <>
+                  <Navigate to={"/login"} />
+                  <Login />
+                </>
+              )
+            }
+          />
 
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              online ? (
+                <>
+                  <Navigate to={"/dashboard"} />
+                  <Dashboard />
+                </>
+              ) : (
+                <>
+                  <Navigate to={"/"} />
+                  <Home />
+                </>
+              )
+            }
+          />
           <Route
             path="/signup"
             element={
@@ -108,7 +147,9 @@ function App() {
             path="/login"
             element={
               online ? (
-                <Navigate to={"/dashboard"} />
+                <>
+                  <Navigate to={localStorage.getItem("lastVisitedPage")} />
+                </>
               ) : (
                 <>
                   <Navigate to={"/login"} />

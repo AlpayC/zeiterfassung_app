@@ -17,6 +17,7 @@ const LayoutContainer = ({ children }) => {
       ) : (
         <>
           <Alert />
+
           <NavBar />
           <div className="content-container grid">{children}</div>
         </>

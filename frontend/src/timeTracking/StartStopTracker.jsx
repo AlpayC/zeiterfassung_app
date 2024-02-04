@@ -6,9 +6,12 @@ import {
   calculateTimeDifferenceInSeconds,
 } from "../utils/formatDate";
 import CounterDisplay from "../components/ui/counter/CounterDisplay";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { AlertContext } from "../context/AlertContext";
 
 export default function StartStopTracker({ user }) {
+  const { showAlert } = useContext(AlertContext);
+
   const [countValue, setCountValue] = useState(0);
   const { isTracking, startTracking, stopTracking, statusText, startDate } =
     useTimeTracking(user);
@@ -17,6 +20,9 @@ export default function StartStopTracker({ user }) {
   const currentTime = formatTime(new Date());
   const difference = calculateTimeDifferenceInSeconds(currentTime, startedTime);
 
+  useEffect(() => {
+    showAlert(statusText, "alert-info", 3000);
+  }, [statusText]);
   console.log(countValue);
   return (
     <section className="mt-12  card task-box p-4 rounded-2xl bg-base-300 shadow-xl flex flex-col gap-3">
@@ -43,7 +49,7 @@ export default function StartStopTracker({ user }) {
         setCountValue={setCountValue}
         direction={"up"}
       />
-      <p className="text-4xl">{statusText}</p>
+      {/* <p className="text-4xl">{statusText}</p> */}
       {isTracking && (
         <>
           <p>

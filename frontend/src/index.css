@@ -136,3 +136,62 @@ span {
 .react-calendar__month-view__weekdays abbr {
   text-decoration: none;
 }
+.rbc-btn-group button {
+  color: theme("colors.neutral");
+  border: 1px solid theme("colors.base-100");
+}
+.rbc-toolbar button.rbc-active {
+  background-color: theme("colors.secondary");
+  border: 1px solid theme("colors.base-100");
+}
+.rbc-toolbar button.rbc-active:hover,
+.rbc-btn-group button:hover {
+  background-color: theme("colors.accent");
+  border: 1px solid theme("colors.base-100");
+}
+.rbc-off-range-bg {
+  background-color: theme("colors.base-100");
+}
+.rbc-month-view {
+  border: theme("colors.base-300") 2px solid;
+}
+.rbc-day-bg + .rbc-day-bg,
+.rbc-header {
+  border-left: 1px solid theme("colors.base-100") !important;
+}
+.rbc-month-row {
+  border-top: 1px solid theme("colors.base-100") !important;
+}
+.rbc-header {
+  border-bottom: 2px solid theme("colors.base-100") !important;
+}
+.rbc-toolbar button.rbc-active:focus {
+  border: 1px solid theme("colors.base-100");
+}
+.rbc-today {
+  background-color: theme("colors.base-200");
+}
+.rbc-time-content {
+  border-top: 2px solid theme("colors.base-100") !important;
+}
+.rbc-time-content > * + * > * {
+  border-left: 1px solid theme("colors.base-100");
+}
+.rbc-timeslot-group {
+  border-bottom: 1px solid theme("colors.base-100");
+}
+.rbc-day-slot .rbc-time-slot {
+  border-top: 1px solid theme("colors.base-100");
+}
+.rbc-time-header-content {
+  border-left: 1px solid theme("colors.base-100");
+}
+.rbc-time-view {
+  border: 1px solid theme("colors.base-100");
+}
+.rbc-agenda-table {
+  border: 1px solid theme("colors.base-100") !important;
+}
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
+  border-left: 1px solid theme("colors.base-100");
+}
