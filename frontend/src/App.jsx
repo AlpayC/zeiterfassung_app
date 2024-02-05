@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import Signup from "./user/Signup";
-import Login from "./user/Login";
+import UserAuth from "./pages/UserAuth";
 import Profile from "./pages/Profile";
 import Tracker from "./pages/Tracker";
 import BigCalendar from "./pages/BigCalendar";
@@ -43,7 +42,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
@@ -56,7 +55,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
@@ -69,7 +68,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
@@ -82,7 +81,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
@@ -95,7 +94,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
@@ -108,7 +107,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
@@ -138,7 +137,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/signup"} />
-                  <Signup />
+                  <UserAuth />
                 </>
               )
             }
@@ -153,7 +152,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
