@@ -13,16 +13,22 @@ export default function StartStopTracker({ user }) {
   const { showAlert } = useContext(AlertContext);
 
   const [countValue, setCountValue] = useState(0);
-  const { isTracking, startTracking, stopTracking, statusText, startDate } =
-    useTimeTracking(user);
+  const {
+    isTracking,
+    startTracking,
+    stopTracking,
+    statusTitle,
+    statusDescription,
+    startDate,
+  } = useTimeTracking(user);
   const startedTime = formatTime(new Date(startDate));
   const startedDate = formatDate(new Date(startDate));
   const currentTime = formatTime(new Date());
   const difference = calculateTimeDifferenceInSeconds(currentTime, startedTime);
 
   useEffect(() => {
-    showAlert(statusText, "alert-info", 3000);
-  }, [statusText]);
+    showAlert(statusTitle, statusDescription, "alert-info", 3000);
+  }, [statusTitle, statusDescription]);
   console.log(countValue);
   return (
     <section className="mt-12  card task-box p-4 rounded-2xl bg-base-300 shadow-xl flex flex-col gap-3">
