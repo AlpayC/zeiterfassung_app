@@ -18,7 +18,7 @@ export default function Alert() {
     return null;
   }
 
-  const { description, alertType } = alertState;
+  const { description, alertType, title } = alertState;
 
   return (
     <div
@@ -64,7 +64,10 @@ export default function Alert() {
           />
         )}
       </svg>
-      <span>{description}</span>
+      <div className="flex flex-col">
+        <h3 className="font-bold">{title}</h3>
+        <div className="text-s">{description}</div>
+      </div>
     </div>
   );
 }

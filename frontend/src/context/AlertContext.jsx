@@ -4,9 +4,8 @@ export const AlertContext = createContext();
 export const AlertProvider = ({ children }) => {
   const [alertState, setAlertState] = useState(null);
 
-  const showAlert = (description, alertType, duration) => {
-    setAlertState({ description, alertType, duration });
-    console.log(alertState);
+  const showAlert = (title, description, alertType, duration) => {
+    setAlertState({ title, description, alertType, duration });
   };
 
   const hideAlert = () => {

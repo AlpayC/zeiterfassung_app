@@ -1,4 +1,4 @@
-import Table from "../../components/ui/tables/Table";
+import Table from "../../ui/tables/Table";
 
 export default function TodayTaskOverview() {
   return (
