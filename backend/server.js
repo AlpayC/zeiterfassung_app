@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 
 import { userRouter } from "./user/routes.js";
 import { timeTrackingRouter } from "./timeTracking/routes.js";
+import { projectManagementRouter } from "./projectManagement/routes.js";
+import { taskRouter } from "./tasks/routes.js";
 
 dotenv.config({
   path: path.join(path.resolve(), "..", ".env"),
@@ -25,6 +27,8 @@ app.use(cookieParser());
 app.use(express.static(ReactAppDistPath.pathname));
 app.use("/api/user", userRouter);
 app.use("/api/timetracking", timeTrackingRouter);
+app.use("/api/projectmanagement", projectManagementRouter);
+app.use("/api/task", taskRouter);
 
 app.get("/api/status", (req, res) => {
   res.send({ status: "Ok" });
