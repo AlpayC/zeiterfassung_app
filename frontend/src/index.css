@@ -42,7 +42,8 @@ h1 {
   font-family: "Poppins-Bold";
 }
 
-h2 {
+h2,
+h6 {
   font-family: "Poppins-SemiBold";
 }
 
@@ -83,19 +84,19 @@ span {
   grid-area: 5 / 1 / 7 / 8;
 }
 ::-webkit-scrollbar {
-  width: 1px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--primary);
+  background: theme("colors.base-200");
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background-color: theme("colors.accent");
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: theme("colors.base-300");
 }
 @media screen and (max-width: 1400px) {
   .dashboard-grid {
@@ -194,4 +195,11 @@ span {
 }
 .rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
   border-left: 1px solid theme("colors.base-100");
+}
+.gradient-background {
+  background: linear-gradient(
+    180deg,
+    theme("colors.base-100"),
+    theme("colors.base-300")
+  );
 }

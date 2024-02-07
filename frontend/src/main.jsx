@@ -13,15 +13,15 @@ import ClientThemeWrapper from "./context/ClientThemeWrapper.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserProvider>
-        <ThemeProvider>
-          <ClientThemeWrapper>
-            <AlertProvider>
+      <AlertProvider>
+        <UserProvider>
+          <ThemeProvider>
+            <ClientThemeWrapper>
               <App />
-            </AlertProvider>
-          </ClientThemeWrapper>
-        </ThemeProvider>
-      </UserProvider>
+            </ClientThemeWrapper>
+          </ThemeProvider>
+        </UserProvider>
+      </AlertProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
