@@ -1,8 +1,8 @@
-import AddTaskBox from "../dashboard/addTaskBox/AddTaskBox";
-import CalendarOverview from "../dashboard/calendarOverview/CalendarOverview";
-import FocusTimer from "../dashboard/focusTimer/FocusTimer";
-import GreetingBox from "../dashboard/greetingBox/GreetingBox";
-import TodayTaskOverview from "../dashboard/todayTaskOverview/TodayTaskOverview";
+import AddTaskBox from "../components/dashboard/addTaskBox/AddTaskBox";
+import CalendarOverview from "../components/dashboard/calendarOverview/CalendarOverview";
+import FocusTimer from "../components/dashboard/focusTimer/FocusTimer";
+import GreetingBox from "../components/dashboard/greetingBox/GreetingBox";
+import TodayTaskOverview from "../components/dashboard/todayTaskOverview/TodayTaskOverview";
 
 export default function Dashboard() {
   return (

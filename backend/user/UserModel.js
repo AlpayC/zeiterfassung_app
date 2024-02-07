@@ -24,7 +24,7 @@ export const userSchema = new Schema({
     lowercase: true,
     validate: {
       validator: isEmail,
-      message: (props) => `${props.value} is not a valid email`,
+      message: (props) => `${props.value} ist keine gültige Email-Adresse`,
     },
   },
 

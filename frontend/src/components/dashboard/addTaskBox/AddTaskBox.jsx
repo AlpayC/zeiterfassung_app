@@ -5,8 +5,8 @@ import {
   FaPlus,
   FaCalendarAlt,
 } from "react-icons/fa";
-import IconButton from "../../components/ui/buttons/IconButton";
-import SelectBox from "../../components/ui/selectBox/SelectBox";
+import IconButton from "../../../components/ui/buttons/IconButton";
+import SelectBox from "../../../components/ui/selectBox/SelectBox";
 import { useState } from "react";
 
 const selectionData = [

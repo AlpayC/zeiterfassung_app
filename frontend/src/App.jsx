@@ -1,9 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import Signup from "./user/Signup";
-import Login from "./user/Login";
+import UserAuth from "./pages/UserAuth";
 import Profile from "./pages/Profile";
 import Tracker from "./pages/Tracker";
+import BigCalendar from "./pages/BigCalendar";
+import Messages from "./pages/Messages";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./user/ResetPassword";
 import LayoutContainer from "./components/LayoutContainer";
@@ -13,10 +14,21 @@ import Projects from "./pages/Projects";
 
 function App() {
   const { isLoggedIn } = useContext(UserContext);
+
   const [online, setOnline] = useState(isLoggedIn);
   useEffect(() => {
     setOnline(isLoggedIn);
+    const handleBeforeUnload = () => {
+      localStorage.setItem("lastVisitedPage", window.location.pathname);
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, [isLoggedIn, online]);
+
   return (
     <LayoutContainer>
       <Routes>
@@ -30,7 +42,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
@@ -43,7 +55,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
@@ -56,7 +68,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
@@ -69,26 +81,54 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }
           />
           <Route
-            path="/ho"
+            path="/calendar"
             element={
               online ? (
-                <Projects />
+                <BigCalendar />
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
+                </>
+              )
+            }
+          />
+          <Route
+            path="/messages"
+            element={
+              online ? (
+                <Messages />
+              ) : (
+                <>
+                  <Navigate to={"/login"} />
+                  <UserAuth />
                 </>
               )
             }
           />
 
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              online ? (
+                <>
+                  <Navigate to={"/dashboard"} />
+                  <Dashboard />
+                </>
+              ) : (
+                <>
+                  <Navigate to={"/"} />
+                  <Home />
+                </>
+              )
+            }
+          />
           <Route
             path="/signup"
             element={
@@ -97,7 +137,7 @@ function App() {
               ) : (
                 <>
                   <Navigate to={"/signup"} />
-                  <Signup />
+                  <UserAuth />
                 </>
               )
             }
@@ -106,11 +146,13 @@ function App() {
             path="/login"
             element={
               online ? (
-                <Navigate to={"/dashboard"} />
+                <>
+                  <Navigate to={localStorage.getItem("lastVisitedPage")} />
+                </>
               ) : (
                 <>
                   <Navigate to={"/login"} />
-                  <Login />
+                  <UserAuth />
                 </>
               )
             }

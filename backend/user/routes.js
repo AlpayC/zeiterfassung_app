@@ -55,25 +55,37 @@ userRouter.post("/resetPassword-confirm", async (req, res) => {
 
 userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
   const { name, email } = req.body;
+  if (!name || !email) {
+    return res.status(404).send({
+      message: "Registrierung fehlgeschlagen",
+      error: {
+        message: "Bitte fülle das Formular aus",
+      },
+    });
+  }
   const newUser = new User({ name, email });
   newUser.setPassword(req.body.password);
   try {
     await newUser.save();
     return res.send({
-      data: {
-        message: "Neuer User angelegt",
-        user: { name, email },
-      },
+      message: "Registrierung erfolgreich",
+      user: { name, email },
+      success: { message: "Du wirst nun weitergeleitet" },
     });
   } catch (e) {
     console.log(e);
     if (e.name === "ValidationError") {
-      return res.status(400).send({ error: e });
+      // return res.status(400).send({ error: e });
+      return res.status(404).send({
+        message: "Registrierung fehlgeschlagen",
+        error: e.errors.email,
+      });
     }
 
     if (e.name === "MongoServerError" && e.code === 11000) {
       console.log("Account existiert bereits");
       return res.status(400).send({
+        message: "Registrierung fehlgeschlagen",
         error: { message: "Ein Account mit diesen Daten existiert bereits!" },
       });
     }
@@ -85,6 +97,14 @@ userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
 userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
   const { email, password } = req.body;
   console.log({ email, password });
+  if (!email || !password) {
+    return res.status(404).send({
+      message: "Login fehlgeschlagen",
+      error: {
+        message: "Keine Benutzerdaten eingegeben",
+      },
+    });
+  }
   try {
     const user = await User.findOne({ email }).select("+hash").select("+salt");
 
@@ -100,16 +120,13 @@ userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
           maxAge: hoursInMillisec(4),
         });
 
-        res.send({
-          message: "Success",
+        return res.send({
+          message: "Login erfolgreich",
           data: user,
-          success: {
-            message:
-              "Login erfolgreich. Du wirst nun auf die Startseite weitergeleitet.",
-          },
+          success: { message: "Du wirst nun weitergeleitet" },
         });
       } else {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Login fehlgeschlagen",
           error: {
             message: "Username und Passwort Kombination ist falsch.",
@@ -124,7 +141,7 @@ userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
         },
       });
     } else {
-      res.status(404).send({
+      return res.status(404).send({
         message: "Login fehlgeschlagen",
         error: {
           message: "Benutzer nicht gefunden.",
@@ -133,7 +150,7 @@ userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
     }
   } catch (error) {
     console.error("Error during login:", error);
-    res.status(500).send({
+    return res.status(500).send({
       message: "Internal Server Error",
       error: {
         message: "Es ist ein Fehler aufgetreten.",
@@ -144,7 +161,10 @@ userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
 
 userRouter.get("/logout", (req, res) => {
   res.clearCookie("auth");
-  res.send("OK");
+  return res.send({
+    message: "Logout erfolgreich",
+    success: { message: "Bis zum nächsten Mal" },
+  });
 });
 
 userRouter.get("/secure", authenticateToken, async (req, res) => {

@@ -4,7 +4,8 @@ import { formatTime } from "../utils/formatDate";
 
 const useTimeTracking = (user) => {
   const [isTracking, setIsTracking] = useState(false);
-  const [statusText, setStatusText] = useState("Starte die Zeit");
+  const [statusTitle, setStatusTitle] = useState("Starte die Zeit");
+  const [statusDescription, setStatusDescription] = useState("");
   const [documentTitle, setDocumentTitle] = useState(document.title);
   const [prevDocumentTitle] = useState(documentTitle);
   const [startDate, setStartDate] = useState(null);
@@ -44,9 +45,8 @@ const useTimeTracking = (user) => {
       });
       setIsTracking(false);
       setDocumentTitle((document.title = prevDocumentTitle));
-      setStatusText(
-        "Deine Zeiterfassung wurde beendet und eine Email wurde an das Personalbüro versendet"
-      );
+      setStatusTitle("Deine Zeiterfassung wurde beendet!");
+      setStatusDescription("Eine Email wurde an das Personalbüro versendet");
       setStartDate(null);
       refetch();
     } catch (error) {
@@ -69,9 +69,8 @@ const useTimeTracking = (user) => {
             setStartDate(response.data.startTimes);
             setIsTracking(true);
 
-            setStatusText(
-              "Deine Zeiterfassung läuft aktuell. Stoppe deine Zeit, wenn du fertig bist."
-            );
+            setStatusTitle("Deine Zeiterfassung läuft aktuell.");
+            setStatusDescription("Stoppe deine Zeit, wenn du fertig bist.");
             setDocumentTitle(
               (document.title = `Zeit läuft seit: ${formatTime(
                 new Date(response.data.startTimes)
@@ -96,7 +95,8 @@ const useTimeTracking = (user) => {
     isTracking,
     startTracking,
     stopTracking,
-    statusText,
+    statusTitle,
+    statusDescription,
     startDate,
     refetch,
   };

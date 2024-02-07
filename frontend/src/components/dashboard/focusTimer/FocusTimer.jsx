@@ -1,8 +1,8 @@
-import landscapeNight from "../../assets/img/landscape-night.jpg";
+import landscapeNight from "../../../assets/img/landscape-night.jpg";
 import { useState, useEffect } from "react";
-import TrackerButton from "../../components/ui/buttons/TrackerButton";
+import TrackerButton from "../../../components/ui/buttons/TrackerButton";
 import TimeAdjustmentComp from "./TimeAdjustmentComp";
-import CounterDisplay from "../../components/ui/counter/CounterDisplay";
+import CounterDisplay from "../../../components/ui/counter/CounterDisplay";
 
 export default function FocusTimer() {
   const [focusTime, setFocusTime] = useState(30);

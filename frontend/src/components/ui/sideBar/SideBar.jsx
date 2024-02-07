@@ -11,6 +11,7 @@ import {
   TbHeart,
   TbPlane,
   TbBriefcase,
+  TbMan,
   TbTableExport,
 } from "react-icons/tb";
 import AddButton from "./AddButton";
@@ -24,13 +25,18 @@ export default function SideBar() {
       icon: <TbHome className="text-2xl" />,
     },
     {
+      label: "Profil",
+      path: "/profile",
+      icon: <TbMan className="text-2xl" />,
+    },
+    {
       label: "Zeiterfassung",
       path: "/tracker",
       icon: <TbClockCheck className="text-2xl" />,
     },
     {
       label: "Kalender",
-      path: "/profile",
+      path: "/calendar",
       icon: <TbCalendar className="text-2xl" />,
     },
     {
