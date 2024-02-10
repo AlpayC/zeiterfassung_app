@@ -6,14 +6,14 @@ import Alert from "./ui/alerts/Alert";
 import Footer from "./footer/Footer";
 
 const LayoutContainer = ({ children }) => {
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, user } = useContext(UserContext);
   return (
     <>
       {isLoggedIn ? (
         <div className="layout-container relative">
           <Alert />
           <NavBar />
-          <SideBar />
+          <SideBar user={user} />
           <div className="content-container grid relative">{children}</div>
         </div>
       ) : (
