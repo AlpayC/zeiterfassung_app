@@ -66,8 +66,9 @@ projectManagementRouter.get(
   "/getProjects",
   authenticateToken,
   async (req, res) => {
+    console.log(req.query);
     try {
-      const { email } = req.body;
+      const { email } = req.query;
 
       console.log({ email });
       const user = await User.findOne({ email: email.toLowerCase() });

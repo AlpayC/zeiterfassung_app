@@ -169,5 +169,5 @@ userRouter.get("/logout", (req, res) => {
 
 userRouter.get("/secure", authenticateToken, async (req, res) => {
   console.log(req.userEmail);
-  res.send({ email: req.userEmail });
+  return res.send({ email: req.userEmail });
 });
