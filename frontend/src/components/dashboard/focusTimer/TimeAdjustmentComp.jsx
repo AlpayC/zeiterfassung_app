@@ -33,12 +33,20 @@ export default function TimeAdjustmentComp({
         icon={<FaMinus />}
         onClick={() => adjustMinutes("down")}
         disabled={isTracking}
+        btnColor={"btn-secondary"}
+        tooltipColor={"tooltip-secondary"}
+        tooltipPosition={"bottom"}
+        tooltipText={"Minuten verringern"}
       />
       <p className="text-3xl text-center flex-grow-0">{focusTime} min</p>
       <CircleButton
         icon={<FaPlus />}
         onClick={() => adjustMinutes("up")}
         disabled={isTracking}
+        tooltipText={"Minuten erhöhen"}
+        btnColor={"btn-secondary"}
+        tooltipColor={"tooltip-secondary"}
+        tooltipPosition={"bottom"}
       />
     </div>
   );

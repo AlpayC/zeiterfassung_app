@@ -1,23 +1,25 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../user/UserContext";
 import Logo from "../logo/Logo";
 import SideMenu from "./SideMenu";
+import SideMenuProjects from "./SideMenuProjects";
 import {
   TbHome,
   TbClockCheck,
   TbCalendar,
   TbMessage,
-  TbSchool,
-  TbHeart,
-  TbPlane,
-  TbBriefcase,
   TbMan,
   TbTableExport,
 } from "react-icons/tb";
 import AddButton from "./AddButton";
+import axios from "axios";
+import { AlertContext } from "../../../context/AlertContext";
 
 export default function SideBar() {
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, user } = useContext(UserContext);
+  const { showAlert } = useContext(AlertContext);
+
+  const [projects, setProjects] = useState();
   const sideMenuLinksGeneral = [
     {
       label: "Dashboard",
@@ -50,46 +52,45 @@ export default function SideBar() {
       icon: <TbMessage className="text-2xl" />,
     },
   ];
-  const sideMenuLinksTasks = [
-    {
-      label: "Inbox",
-      path: "/tasks/inbox",
-      icon: <TbHome className="text-2xl" />,
-      color: "red",
-    },
-    {
-      label: "Arbeit",
-      path: "/tasks/work",
-      icon: <TbBriefcase className="text-2xl" />,
-      color: "blue",
-    },
-    {
-      label: "Studium",
-      path: "/tasks/study",
-      icon: <TbSchool className="text-2xl" />,
-      color: "yellow",
-    },
-    {
-      label: "Gesundheit",
-      path: "/tasks/health",
-      icon: <TbHeart className="text-2xl" />,
-      color: "green",
-    },
-    {
-      label: "Reise",
-      path: "/tasks/holiday",
-      icon: <TbPlane className="text-2xl" />,
-      color: "purple",
-    },
-  ];
+  const inboxLink = {
+    label: "Inbox",
+    path: "inbox",
+    icon: <TbHome className="text-2xl" />,
+    color: "red",
+  };
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get(`/api/projectmanagement/getProjects`, {
+          params: {
+            email: user.email,
+          },
+        });
+        setProjects(response.data);
+      } catch (e) {
+        showAlert(
+          `${e.response?.data.message}`,
+          ` ${e.response?.data.error.message}`,
+          "alert-error",
+          4000
+        );
+        console.log(e);
+      }
+    };
+
+    fetchProjects();
+  }, []);
   return (
     <>
       {isLoggedIn && (
         <div className="h-screen w-max px-6 bg-base-300 sidebar py-5 ">
           <Logo />
           <SideMenu links={sideMenuLinksGeneral} />
-          <AddButton label={"Meine Listen"} />
-          <SideMenu links={sideMenuLinksTasks} />
+
+          <AddButton label={"Meine Projekte"} type={"projects"} />
+          {projects && (
+            <SideMenuProjects links={projects} inboxLink={inboxLink} />
+          )}
           <AddButton label={"Meine Workspaces"} />
         </div>
       )}

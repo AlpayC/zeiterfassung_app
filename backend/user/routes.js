@@ -133,6 +133,13 @@ userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
           },
         });
       }
+    } else if (!email | !password) {
+      res.status(404).send({
+        message: "Login fehlgeschlagen",
+        error: {
+          message: "Keine Logindaten eingegeben.",
+        },
+      });
     } else {
       return res.status(404).send({
         message: "Login fehlgeschlagen",
@@ -162,5 +169,5 @@ userRouter.get("/logout", (req, res) => {
 
 userRouter.get("/secure", authenticateToken, async (req, res) => {
   console.log(req.userEmail);
-  res.send({ email: req.userEmail });
+  return res.send({ email: req.userEmail });
 });
