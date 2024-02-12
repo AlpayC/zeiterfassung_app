@@ -23,7 +23,7 @@ export default function Alert() {
   return (
     <div
       role="alert"
-      className={`w-max alert ${alertType} absolute top-16 right-6  z-50`}
+      className={`w-max alert ${alertType} absolute top-16 right-6  z-[1000]`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

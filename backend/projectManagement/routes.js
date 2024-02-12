@@ -3,6 +3,8 @@ import multer from "multer";
 import { Project } from "./ProjectModel.js";
 import User from "../user/UserModel.js";
 import { authenticateToken } from "../user/authToken.js";
+import { parse } from "date-fns";
+
 export const projectManagementRouter = Router();
 
 const multerMiddleware = multer();
@@ -14,9 +16,9 @@ projectManagementRouter.post(
   authenticateToken,
   async (req, res) => {
     try {
-      const { email, title, color, icon } = req.body;
+      const { email, startDate, endDate, tags, description, title } = req.body;
 
-      console.log({ email, title, color, icon });
+      console.log({ email, startDate, endDate, tags, description, title });
       const user = await User.findOne({ email: email.toLowerCase() });
       if (!user) {
         return res.status(404).send("User nicht gefunden");
@@ -29,8 +31,6 @@ projectManagementRouter.post(
       const existingProjectEntry = await Project.findOne({
         employee: user._id,
         title,
-        color,
-        icon,
       });
 
       if (existingProjectEntry) {
@@ -44,11 +44,16 @@ projectManagementRouter.post(
 
       const newProjectEntry = new Project({
         employee: user._id,
+        ...(startDate && endDate
+          ? {
+              startDate: parse(startDate, "dd.MM.yyyy", new Date()),
+              endDate: parse(endDate, "dd.MM.yyyy", new Date()),
+            }
+          : {}),
+        tags,
         title,
-        color,
-        icon,
+        description,
       });
-
       await newProjectEntry.save();
 
       return res.status(201).send({
@@ -56,8 +61,18 @@ projectManagementRouter.post(
         success: { message: "Füge nun Aufgaben hinzu" },
       });
     } catch (err) {
-      console.error(err);
-      res.status(500).send("Internal Server Error");
+      if (err.name === "ValidationError") {
+        console.error(err);
+        // return res.status(400).send({ error: e });
+        return res.status(404).send({
+          message: "Projekt nicht gespeichert",
+          error: { message: "Füge mindestens ein Projektitel hinzu" },
+        });
+      }
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+      }
     }
   }
 );
