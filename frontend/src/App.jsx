@@ -10,7 +10,8 @@ import ResetPassword from "./user/ResetPassword";
 import LayoutContainer from "./components/LayoutContainer";
 import { UserContext } from "./user/UserContext";
 import { useContext, useEffect, useState } from "react";
-import Projects from "./pages/Projects";
+import Projectlist from "./pages/projects/Projectlist";
+import Project from "./pages/projects/Project";
 
 function App() {
   const { isLoggedIn } = useContext(UserContext);
@@ -77,7 +78,20 @@ function App() {
             path="/projects"
             element={
               online ? (
-                <Projects />
+                <Projectlist />
+              ) : (
+                <>
+                  <Navigate to={"/login"} />
+                  <UserAuth />
+                </>
+              )
+            }
+          />
+          <Route
+            path="/projects/:id/details"
+            element={
+              online ? (
+                <Project />
               ) : (
                 <>
                   <Navigate to={"/login"} />

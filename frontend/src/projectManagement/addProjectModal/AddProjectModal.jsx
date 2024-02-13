@@ -8,11 +8,11 @@ import { AlertContext } from "../../context/AlertContext";
 import { UserContext } from "../../user/UserContext";
 import DetailsOutput from "./DetailsOutput";
 import ImgUploadBtn from "../../components/ui/buttons/ImgUploadBtn";
-
+import { ProjectsContext } from "../../context/ProjectContext";
 export default function AddProjectModal({ closeModal, modalOpen }) {
   const { showAlert } = useContext(AlertContext);
   const { user } = useContext(UserContext);
-
+  const { refetchProjects } = useContext(ProjectsContext);
   const [projectTitle, setProjectTitle] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [startDate, setStartDate] = useState(null);
@@ -48,7 +48,7 @@ export default function AddProjectModal({ closeModal, modalOpen }) {
         3000
       );
       closeModal();
-
+      refetchProjects();
       console.log(response);
     } catch (e) {
       console.error("Error:", e);

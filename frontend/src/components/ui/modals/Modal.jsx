@@ -55,7 +55,7 @@ export default function Modal({
           <section className="modal-box mb-36 !w-[91%] " ref={modalRef}>
             {children}
           </section>
-          <Kbd keyList={kbdList} />
+          <Kbd keyList={kbdList} position={"absolute top 1/2"} />
           {shortcutOverlay ? shortcutOverlay : <></>}
 
           <div className="mb-72">

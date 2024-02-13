@@ -1,6 +1,6 @@
-export default function Kbd({ keyList }) {
+export default function Kbd({ keyList, position }) {
   return (
-    <section className="absolute top-1/2">
+    <section className={`${position}`}>
       <div className="flex items-center justify-center gap-2 mt-4">
         {keyList.map((key, index) => {
           return (
