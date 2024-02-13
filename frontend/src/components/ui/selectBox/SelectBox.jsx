@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
-export default function SelectBox({ data }) {
-  const [listSelection, setListSelection] = useState("Inbox");
+export default function SelectBox({ data, startLabel }) {
+  const [listSelection, setListSelection] = useState(startLabel || "Inbox");
   const [selectBoxOpen, setSelectBoxOpen] = useState(false);
   const [badgeColor, setBadgeColor] = useState("bg-red-500");
   const selectBoxRef = useRef(null);

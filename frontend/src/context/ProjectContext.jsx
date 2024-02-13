@@ -23,7 +23,6 @@ export const ProjectsProvider = ({ children }) => {
           );
           if (response && response.data) {
             setProjects(response.data);
-            console.log(projects);
           } else {
             setProjects(null);
           }

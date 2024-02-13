@@ -150,13 +150,16 @@ projectManagementRouter.put(
   authenticateToken,
   async (req, res) => {
     try {
-      const { email, title, color, icon, projectId } = req.body;
+      const { email, startDate, endDate, tags, description, title, projectId } =
+        req.body;
       const user = await User.findOne({ email: email.toLowerCase() });
       const project = req.params.id;
       const updatedData = {
         title: title,
-        color: color,
-        icon: icon,
+        startDate: startDate,
+        endDate: endDate,
+        tags: tags,
+        description: description,
       };
 
       if (!user) {
@@ -171,16 +174,21 @@ projectManagementRouter.put(
       }
 
       const compareExistingProject = await Project.findById(project);
-
-      if (
-        compareExistingProject.title === updatedData.title &&
-        compareExistingProject.color === updatedData.color &&
-        compareExistingProject.icon === updatedData.icon
-      ) {
-        return res.status(200).send({
-          message: "Keine Änderungen an den Projektdetails vorgenommen",
-        });
-      }
+      console.log(compareExistingProject);
+      console.log(updatedData);
+      // if (
+      //   compareExistingProject.title === updatedData.title ||
+      //   compareExistingProject.description === updatedData.description ||
+      //   compareExistingProject.startDate === updatedData.startDate ||
+      //   compareExistingProject.endDate === updatedData.endDate
+      // ) {
+      //   return res.status(200).send({
+      //     message: "Keine Änderungen",
+      //     success: {
+      //       message: "Deine Anfrage enthält keine Aktualisierung",
+      //     },
+      //   });
+      // }
 
       await Project.findByIdAndUpdate(project, updatedData);
 
