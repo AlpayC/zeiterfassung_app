@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AlertContext } from "../../context/AlertContext";
+import TagsOutput from "./TagsOutput";
 
 export default function DetailsOutput({
   startDate,
@@ -42,10 +43,10 @@ export default function DetailsOutput({
         <></>
       )}
       {endDate ? (
-        <div className="badge badge-success badge-outline indicator">
+        <div className="badge badge-success badge-outline indicator ">
           <span> Ende: {endDate}</span>
           <span
-            className="indicator-item badge badge-error badge-xs text-white hover:bg-opacity-60 hover:cursor-pointer aspect-square p-2"
+            className="indicator-item badge badge-error badge-xs text-white hover:bg-opacity-60 hover:cursor-pointer aspect-square p-2 !z-0"
             onClick={() => deleteDate("end")}
           >
             x
@@ -54,29 +55,7 @@ export default function DetailsOutput({
       ) : (
         <></>
       )}
-      {tags?.map((tag, index) => {
-        const classes = [
-          "badge-primary",
-          "badge-secondary",
-          "badge-accent",
-          "badge-info",
-          "badge-warning",
-          "badge-success",
-        ];
-        const classIndex = index % classes.length;
-        const className = `badge ${classes[classIndex]} badge-outline`;
-        return (
-          <div key={index} className={`${className} indicator`}>
-            <span>#{tag.toLowerCase()}</span>
-            <span
-              className="indicator-item badge badge-error badge-xs text-white hover:bg-opacity-60 hover:cursor-pointer aspect-square p-2"
-              onClick={() => removeTags(index)}
-            >
-              x
-            </span>
-          </div>
-        );
-      })}
+      <TagsOutput tags={tags} removeTags={removeTags} />
     </section>
   );
 }
