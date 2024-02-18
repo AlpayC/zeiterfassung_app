@@ -8,14 +8,19 @@
   grid-template-rows: repeat(10, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 10px;
+  overflow: hidden;
+  height: 100vh;
 }
 
 .content-container {
   grid-area: 2 / 2 / 11 / 11;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .sidebar {
   grid-area: 1 / 1 / 11 / 2;
+  overflow: hidden;
 }
 .navbar {
   grid-area: 1 / 2 / 2 / 11;

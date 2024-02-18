@@ -1,7 +1,7 @@
 import CircleButton from "../buttons/CircleButton";
 import { FaPlus } from "react-icons/fa";
 import useModal from "../../../hooks/useModal";
-import AddProjectModal from "../../../projectManagement/AddProjectModal";
+import AddProjectModal from "../../../projectManagement/addProjectModal/AddProjectModal";
 export default function AddButton({ label }) {
   const { modalOpen, closeModal, openModal } = useModal();
 

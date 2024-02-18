@@ -9,7 +9,6 @@ export default function Modal({
   modalOpen,
   children,
   shortcutOverlay,
-  showPopups,
 }) {
   const modalRef = useRef();
   useEffect(() => {
@@ -56,15 +55,9 @@ export default function Modal({
           <section className="modal-box mb-36 !w-[91%] " ref={modalRef}>
             {children}
           </section>
-          <Kbd keyList={kbdList} />
+          <Kbd keyList={kbdList} position={"absolute top 1/2"} />
           {shortcutOverlay ? shortcutOverlay : <></>}
-          {showPopups ? (
-            <div className="h-32 w-32 absolute left-0 bg-accent backdrop-blur-3xl z-[9999]">
-              hi
-            </div>
-          ) : (
-            <></>
-          )}
+
           <div className="mb-72">
             <CircleButton
               onClick={closeModal}

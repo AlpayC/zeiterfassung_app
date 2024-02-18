@@ -16,7 +16,7 @@ export default function SideMenuProjects({ links, inboxLink }) {
         return (
           <li key={index} className="px-2 py-1">
             <NavLink
-              to={`/projects/${link.title.toLowerCase()}`}
+              to={`/projects/${link._id}/details`}
               className="text-lg px-2 gap-4 rounded-2xl"
             >
               {getIconComponent(link.icon)}

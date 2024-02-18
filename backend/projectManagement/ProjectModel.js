@@ -7,9 +7,11 @@ const projectSchema = new mongoose.Schema({
     required: true,
   },
   title: { type: String, required: true },
-  color: { type: String, required: true },
-  icon: { type: String, required: true },
+  startDate: { type: Date },
+  endDate: { type: Date },
+  description: { type: String },
   createdAt: { type: Date, default: Date.now },
+  tags: [{ type: String }],
 });
 
 export const Project = mongoose.model("Project", projectSchema);

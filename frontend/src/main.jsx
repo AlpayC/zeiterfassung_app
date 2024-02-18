@@ -9,6 +9,7 @@ import { UserProvider } from "./user/UserContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { AlertProvider } from "./context/AlertContext.jsx";
 import ClientThemeWrapper from "./context/ClientThemeWrapper.jsx";
+import { ProjectsProvider } from "./context/ProjectContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <UserProvider>
           <ThemeProvider>
             <ClientThemeWrapper>
-              <App />
+              <ProjectsProvider>
+                <App />
+              </ProjectsProvider>
             </ClientThemeWrapper>
           </ThemeProvider>
         </UserProvider>
