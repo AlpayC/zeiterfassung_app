@@ -150,8 +150,16 @@ projectManagementRouter.put(
   authenticateToken,
   async (req, res) => {
     try {
-      const { email, startDate, endDate, tags, description, title, projectId } =
-        req.body;
+      const {
+        email,
+        startDate,
+        endDate,
+        tags,
+        description,
+        title,
+        projectId,
+        projectStatus,
+      } = req.body;
       const user = await User.findOne({ email: email.toLowerCase() });
       const project = req.params.id;
       const updatedData = {
@@ -160,6 +168,7 @@ projectManagementRouter.put(
         endDate: endDate,
         tags: tags,
         description: description,
+        projectStatus: projectStatus,
       };
 
       if (!user) {
@@ -174,8 +183,8 @@ projectManagementRouter.put(
       }
 
       const compareExistingProject = await Project.findById(project);
-      console.log(compareExistingProject);
-      console.log(updatedData);
+      // console.log(compareExistingProject);
+      // console.log(updatedData);
       // if (
       //   compareExistingProject.title === updatedData.title ||
       //   compareExistingProject.description === updatedData.description ||
