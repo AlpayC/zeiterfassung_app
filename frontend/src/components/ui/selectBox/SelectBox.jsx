@@ -7,18 +7,18 @@ export default function SelectBox({ selection, active, setActive, onClick }) {
   const [selectBoxOpen, setSelectBoxOpen] = useState(false);
   const selectBoxRef = useRef(null);
 
-  const toggle = (e, label, color) => {
+  const toggle = (e, title, color) => {
     e.preventDefault();
     setSelectBoxOpen((prev) => !prev);
-    if (label !== undefined && active) {
-      setActiveSelectionLabel(label);
+    if (title !== undefined && active) {
+      setActiveSelectionLabel(title);
     }
     if (color !== undefined && active) {
       setActiveBadgeColor(color);
     }
     if (active) {
       setActive({
-        label: label,
+        title: title,
         color: color,
         status: true,
       });
@@ -46,7 +46,7 @@ export default function SelectBox({ selection, active, setActive, onClick }) {
 
   useEffect(() => {
     if (active) {
-      setActiveSelectionLabel(active?.label);
+      setActiveSelectionLabel(active?.title);
       setActiveBadgeColor(active?.color);
     }
   }, [active]);
@@ -79,12 +79,12 @@ export default function SelectBox({ selection, active, setActive, onClick }) {
             <li key={index}>
               <a
                 onClick={(e) => {
-                  toggle(e, item.label, item.color);
+                  toggle(e, item.title, item.color);
                   onClick(selection, item);
                 }}
-                value={item.label}
+                value={item.title}
               >
-                {item.label}
+                {item.title}
                 <div className={`badge ${item.color} badge-xs`}></div>
               </a>
             </li>

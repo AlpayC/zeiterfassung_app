@@ -2,22 +2,22 @@ import mongoose from "mongoose";
 
 const initProjectStatus = [
   {
-    label: "Noch nicht gestartet",
+    title: "Noch nicht gestartet",
     color: "bg-red-500",
     status: true,
   },
   {
-    label: "Läuft",
+    title: "Läuft",
     color: "bg-yellow-500",
     status: false,
   },
   {
-    label: "Abgeschlossen",
+    title: "Abgeschlossen",
     color: "bg-green-500",
     status: false,
   },
   {
-    label: "Geblockt",
+    title: "Geblockt",
     color: "bg-blue-500",
     status: false,
   },

@@ -56,7 +56,7 @@ export default function useProject({
   const updateProjectStatus = async (projectStatus, newActiveStatus) => {
     const projectStatuses = await projectStatus.map((status) => ({
       ...status,
-      status: status.label === newActiveStatus.label,
+      status: status.title === newActiveStatus.title,
     }));
 
     const requestData = {

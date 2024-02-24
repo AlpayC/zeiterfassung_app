@@ -81,7 +81,6 @@ export default function Project() {
         <div className="flex justify-between">
           <SelectBox
             selection={projectStatus}
-            startLabel={activeStatus?.label}
             active={activeStatus}
             setActive={(newActiveStatus) => {
               setActiveStatus(newActiveStatus);
@@ -89,7 +88,7 @@ export default function Project() {
             }}
             onClick={(selectedStatus) => {
               const newActiveStatus = projectStatus.find(
-                (status) => status.label === selectedStatus.label
+                (status) => status.title === selectedStatus.title
               );
               setActiveStatus(newActiveStatus);
             }}
