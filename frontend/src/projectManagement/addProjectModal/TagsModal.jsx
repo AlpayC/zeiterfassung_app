@@ -3,7 +3,7 @@ import Modal from "../../components/ui/modals/Modal";
 import useProject from "../../hooks/useProject";
 
 export default function TagsModal({ closeModal, modalOpen, id, oldTags }) {
-  const [tags, setTags] = useState(oldTags); // Initialisiere tags mit den alten Tags
+  const [tags, setTags] = useState(oldTags);
   const { updateProject } = useProject({
     tags,
     id,
@@ -11,13 +11,15 @@ export default function TagsModal({ closeModal, modalOpen, id, oldTags }) {
 
   const handleTagChange = (e) => {
     const newTag = e.target.value;
-    setTags([...tags, newTag]); // Füge das neue Tag dem vorherigen Array hinzu
+
+    setTags([...oldTags, newTag]);
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       updateProject(e);
       closeModal();
+      e.target.value = "";
     }
   };
 

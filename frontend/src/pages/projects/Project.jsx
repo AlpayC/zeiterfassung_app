@@ -22,18 +22,21 @@ export default function Project() {
   const [project, setProject] = useState();
   const [projectTitle, setProjectTitle] = useState();
   const [projectDescription, setProjectDescription] = useState();
+  const [projectStatus, setProjectStatus] = useState();
+  const [activeStatus, setActiveStatus] = useState();
   const [inputOnFocus, setInputOnFocus] = useState(false);
   const [inputDescriptionOnFocus, setInputDescriptionOnFocus] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [tags, setTags] = useState([]);
-  const { updateProject } = useProject({
+  const { updateProject, updateProjectStatus, updateProjectTags } = useProject({
     tags,
     projectTitle,
     startDate,
     endDate,
     id,
     projectDescription,
+    projectStatus,
   });
 
   useEffect(() => {
@@ -45,8 +48,13 @@ export default function Project() {
       setStartDate(filteredProject.startDate);
       setEndDate(filteredProject.endDate);
       setTags(filteredProject.tags);
+      setProjectStatus(filteredProject.projectStatus);
+
+      setActiveStatus(
+        filteredProject.projectStatus.find((status) => status.status === true)
+      );
     }
-  }, [projects, id, project]);
+  }, [projects, id, project, projectStatus]);
 
   const kbdList = [
     {
@@ -54,33 +62,35 @@ export default function Project() {
       key: " ↵ ",
     },
   ];
-  const data = [
-    {
-      label: "Noch nicht gestartet",
-      color: "bg-red-500",
-    },
-    {
-      label: "Läuft",
-      color: "bg-yellow-500",
-    },
-    {
-      label: "Abgeschlossen",
-      color: "bg-green-500",
-    },
-    {
-      label: "Geblockt",
-      color: "bg-blue-500",
-    },
-  ];
-  const { modalOpen, closeModal, openModal } = useModal();
 
+  const { modalOpen, closeModal, openModal } = useModal();
+  const removeTags = (index) => {
+    const newTags = [...tags];
+    newTags.splice(index, 1);
+    setTags(newTags);
+    updateProjectTags(newTags);
+  };
   return (
     <section className="overflow-y-scroll w-full">
       <article className="card bg-base-300 shadow-xl p-6  rounded-2xl m-10">
-        <SelectBox data={data} startLabel={"Noch nicht gestartet"} />
-        <div className="flex my-6">
+        <SelectBox
+          selection={projectStatus}
+          startLabel={activeStatus?.label}
+          active={activeStatus}
+          setActive={(newActiveStatus) => {
+            setActiveStatus(newActiveStatus);
+            updateProjectStatus(projectStatus, newActiveStatus);
+          }}
+          onClick={(selectedStatus) => {
+            const newActiveStatus = projectStatus.find(
+              (status) => status.label === selectedStatus.label
+            );
+            setActiveStatus(newActiveStatus);
+          }}
+        />
+        <div className="flex mt-6">
           <ImgUploadBtn />
-          <div className="relative w-full flex flex-col min-h-max pb-12 ">
+          <div className="relative w-full flex flex-col min-h-max pb-11 ">
             <input
               type="text"
               className="input input-ghost bg-base-100 w-full text-3xl"
@@ -99,11 +109,11 @@ export default function Project() {
             )}
           </div>
         </div>
-        <div className="flex gap-2 mb-2 items-center ">
+        <div className="flex gap-2 mb-2 items-center pb-6">
           <p className="mr-2">Tags</p>
           {tags.length > 0 && (
             <div className="flex gap-4 mr-2">
-              <TagsOutput tags={tags} />
+              <TagsOutput tags={tags} removeTags={removeTags} />
             </div>
           )}
           <button
@@ -120,7 +130,7 @@ export default function Project() {
             oldTags={tags}
           />
         </div>
-        <div className="relative w-full flex flex-col min-h-max pb-12">
+        <div className="relative w-full flex flex-col min-h-max pb-11 mb-6">
           <textarea
             rows="4"
             cols="50"
@@ -141,87 +151,13 @@ export default function Project() {
           )}
         </div>
         <section className="relative w-full flex flex-row justify-center min-h-max pb-12 mb-2 gap-5">
-          <div className="card bg-secondary bg-opacity-60 flex p-5">
+          <div className="card bg-secondary bg-opacity-60 flex p-5 ">
             <p className="flex items-center gap-2">
               <TbCalendarPlus className="text-2xl " />
               Startzeit
             </p>
             <DatePicker
-              className="bg-secondary bg-opacity-0 w-full card-body focus-visible:outline-none"
-              selected={startDate}
-              locale="de"
-              dateFormat={"dd.MM.yyyy"}
-              onChange={(date) => setStartDate(date)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateProject(e);
-                }
-              }}
-            />
-          </div>
-          <div className="card  bg-primary bg-opacity-60 flex p-5">
-            <p className="flex items-center gap-2">
-              <TbCalendarMinus className="text-2xl " />
-              Endzeit
-            </p>
-            <DatePicker
-              className="bg-primary bg-opacity-0 w-full card-body focus-visible:outline-none"
-              selected={endDate}
-              locale="de"
-              dateFormat={"dd.MM.yyyy"}
-              onChange={(date) => setEndDate(date)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateProject(e);
-                }
-              }}
-            />
-          </div>
-          <div className="card  bg-accent bg-opacity-60 flex p-5">
-            <p className="flex items-center gap-2">
-              <PiChecksBold className="text-2xl " />
-              Aufgaben
-            </p>
-            <DatePicker
-              className="bg-accent bg-opacity-0 w-full card-body focus-visible:outline-none"
-              selected={endDate}
-              locale="de"
-              dateFormat={"dd.MM.yyyy"}
-              onChange={(date) => setEndDate(date)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateProject(e);
-                }
-              }}
-            />
-          </div>
-          <div className="card  bg-success bg-opacity-60 flex p-5">
-            <p className="flex items-center gap-2">
-              <PiCheckCircleBold className="text-2xl " />
-              Fortschritt
-            </p>
-            <DatePicker
-              className="bg-secondary bg-opacity-0 w-full card-body focus-visible:outline-none"
-              selected={endDate}
-              locale="de"
-              dateFormat={"dd.MM.yyyy"}
-              onChange={(date) => setEndDate(date)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateProject(e);
-                }
-              }}
-            />
-          </div>
-        </section>
-        <section className="relative w-full flex flex-row justify-center min-h-max pb-12 mb-2 gap-5">
-          <div className="card bg-secondary bg-opacity-60 flex p-5">
-            <p className="flex items-center gap-2">
-              <TbCalendarPlus className="text-2xl " />
-              Startzeit
-            </p>
-            <DatePicker
-              className="bg-secondary bg-opacity-0 w-full card-body focus-visible:outline-none"
+              className="bg-secondary bg-opacity-0 w-full card-body focus-visible:outline-none "
               selected={startDate}
               locale="de"
               dateFormat={"dd.MM.yyyy"}
