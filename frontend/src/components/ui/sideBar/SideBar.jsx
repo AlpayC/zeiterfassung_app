@@ -51,12 +51,7 @@ export default function SideBar() {
       icon: <TbMessage className="text-2xl" />,
     },
   ];
-  const inboxLink = {
-    label: "Inbox",
-    path: "inbox",
-    icon: <TbHome className="text-2xl" />,
-    color: "red",
-  };
+
   // useEffect(() => {
   //   const fetchProjects = async () => {
   //     try {
@@ -87,9 +82,7 @@ export default function SideBar() {
           <SideMenu links={sideMenuLinksGeneral} />
 
           <AddButton label={"Meine Projekte"} type={"projects"} />
-          {projects && (
-            <SideMenuProjects links={projects} inboxLink={inboxLink} />
-          )}
+          {projects && <SideMenuProjects links={projects} />}
           <AddButton label={"Meine Workspaces"} />
         </div>
       )}

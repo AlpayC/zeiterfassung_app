@@ -7,30 +7,9 @@ import {
 } from "react-icons/fa";
 import IconButton from "../../../components/ui/buttons/IconButton";
 import SelectBox from "../../../components/ui/selectBox/SelectBox";
-import { useState } from "react";
+import { ProjectsContext } from "../../../context/ProjectContext";
+import { useContext, useEffect, useState } from "react";
 
-const selectionData = [
-  {
-    label: "Inbox",
-    color: "bg-red-500",
-  },
-  {
-    label: "Arbeit",
-    color: "bg-blue-500",
-  },
-  {
-    label: "Studium",
-    color: "bg-yellow-500",
-  },
-  {
-    label: "Gesundheit",
-    color: "bg-green-500",
-  },
-  {
-    label: "Reise",
-    color: "bg-purple-500",
-  },
-];
 const buttonData = [
   {
     label: "Heute",
@@ -52,10 +31,11 @@ const buttonData = [
 
 export default function AddTaskBox() {
   const [activeButtonIndex, setActiveButtonIndex] = useState(null);
-
+  const { projects } = useContext(ProjectsContext);
   const handleButtonClick = (index) => {
     setActiveButtonIndex((prevIndex) => (prevIndex === index ? null : index));
   };
+  const [activeProject, setActiveProject] = useState();
 
   return (
     <article className=" card task-box p-4 rounded-2xl bg-base-300 shadow-xl flex flex-col gap-3">
@@ -78,7 +58,23 @@ export default function AddTaskBox() {
         </button>
       </div>
       <div className="flex items-stretch gap-4">
-        <SelectBox size={""} data={selectionData} />
+        {projects && (
+          <SelectBox
+            selection={projects}
+            active={projects[0]}
+            setActive={(newActiveProject) => {
+              setActiveProject(newActiveProject);
+            }}
+            onClick={(projects) => {
+              const newActiveProject = projects.find(
+                (project) => project.title === project.title
+              );
+              console.log({ newActiveProject });
+              setActiveProject(newActiveProject);
+            }}
+          />
+        )}
+
         {buttonData.map((button, index) => (
           <IconButton
             label={button.label}

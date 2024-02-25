@@ -112,6 +112,7 @@ projectManagementRouter.delete(
   async (req, res) => {
     try {
       const { email, projectId } = req.body;
+      console.log({ email, projectId });
       const user = await User.findOne({ email: email.toLowerCase() });
       const project = req.params.id;
       if (!user) {

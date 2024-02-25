@@ -3,6 +3,7 @@ import { UserContext } from "../user/UserContext";
 import { useContext } from "react";
 import axios from "axios";
 import { ProjectsContext } from "../context/ProjectContext";
+import { useNavigate } from "react-router-dom";
 
 export default function useProject({
   projectTitle,
@@ -15,11 +16,10 @@ export default function useProject({
   const { showAlert } = useContext(AlertContext);
   const { user } = useContext(UserContext);
   const { refetchProjects } = useContext(ProjectsContext);
-
+  const nav = useNavigate();
   const updateProject = async (event) => {
     if (event) {
       event.preventDefault();
-      console.log(event.target.value);
     }
     const requestData = {
       title: projectTitle,
@@ -30,7 +30,6 @@ export default function useProject({
       tags: tags,
       projectId: id,
     };
-    console.log({ requestData });
     try {
       const response = await axios.put(
         `/api/projectmanagement/updateProject/${id}`,
@@ -57,7 +56,7 @@ export default function useProject({
   const updateProjectStatus = async (projectStatus, newActiveStatus) => {
     const projectStatuses = await projectStatus.map((status) => ({
       ...status,
-      status: status.label === newActiveStatus.label,
+      status: status.title === newActiveStatus.title,
     }));
 
     const requestData = {
@@ -120,5 +119,40 @@ export default function useProject({
     }
   };
 
-  return { updateProject, updateProjectStatus, updateProjectTags };
+  const deleteProject = async () => {
+    const requestData = {
+      email: user.email,
+      projectId: id,
+    };
+
+    try {
+      const response = await axios.delete(
+        `/api/projectmanagement/deleteProject/${id}`,
+        { data: requestData }
+      );
+      showAlert(
+        `${response?.data.message}`,
+        `${response?.data.success.message}`,
+        "alert-success",
+        3000
+      );
+      refetchProjects();
+      nav("/dashboard");
+      console.log(response);
+    } catch (e) {
+      console.error("Error:", e);
+      showAlert(
+        `${e.response?.data.message}`,
+        ` ${e.response?.data.error.message}`,
+        "alert-error",
+        4000
+      );
+    }
+  };
+  return {
+    updateProject,
+    updateProjectStatus,
+    updateProjectTags,
+    deleteProject,
+  };
 }

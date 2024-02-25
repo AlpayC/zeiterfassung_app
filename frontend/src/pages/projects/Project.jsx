@@ -29,7 +29,12 @@ export default function Project() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [tags, setTags] = useState([]);
-  const { updateProject, updateProjectStatus, updateProjectTags } = useProject({
+  const {
+    updateProject,
+    updateProjectStatus,
+    updateProjectTags,
+    deleteProject,
+  } = useProject({
     tags,
     projectTitle,
     startDate,
@@ -72,22 +77,29 @@ export default function Project() {
   };
   return (
     <section className="overflow-y-scroll w-full">
-      <article className="card bg-base-300 shadow-xl p-6  rounded-2xl m-10">
-        <SelectBox
-          selection={projectStatus}
-          startLabel={activeStatus?.label}
-          active={activeStatus}
-          setActive={(newActiveStatus) => {
-            setActiveStatus(newActiveStatus);
-            updateProjectStatus(projectStatus, newActiveStatus);
-          }}
-          onClick={(selectedStatus) => {
-            const newActiveStatus = projectStatus.find(
-              (status) => status.label === selectedStatus.label
-            );
-            setActiveStatus(newActiveStatus);
-          }}
-        />
+      <article className="card bg-base-300 shadow-xl p-6  rounded-2xl m-10 ">
+        <div className="flex justify-between">
+          <SelectBox
+            selection={projectStatus}
+            active={activeStatus}
+            setActive={(newActiveStatus) => {
+              setActiveStatus(newActiveStatus);
+              updateProjectStatus(projectStatus, newActiveStatus);
+            }}
+            onClick={(selectedStatus) => {
+              const newActiveStatus = projectStatus.find(
+                (status) => status.title === selectedStatus.title
+              );
+              setActiveStatus(newActiveStatus);
+            }}
+          />
+          <button
+            className="btn btn-outline btn-warning"
+            onClick={deleteProject}
+          >
+            X
+          </button>
+        </div>
         <div className="flex mt-6">
           <ImgUploadBtn />
           <div className="relative w-full flex flex-col min-h-max pb-11 ">
