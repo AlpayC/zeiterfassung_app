@@ -31,7 +31,7 @@ export default function Project() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [tags, setTags] = useState([]);
-  const { updateProject, updateProjectTags, deleteProject } = useProject({
+  const { updateProject, deleteProject } = useProject({
     tags,
     projectTitle,
     id,
@@ -67,7 +67,7 @@ export default function Project() {
     const newTags = [...tags];
     newTags.splice(index, 1);
     setTags(newTags);
-    updateProjectTags(newTags);
+    updateProject({ newTags });
   };
 
   return (
