@@ -17,6 +17,7 @@ import useModal from "../../hooks/useModal";
 import TagsModal from "../../projectManagement/addProjectModal/TagsModal";
 import CircleButton from "../../components/ui/buttons/CircleButton";
 import { MdDeleteForever } from "react-icons/md";
+import DeleteProjectModal from "../../projectManagement/addProjectModal/DeleteProjectModal";
 
 export default function Project() {
   const { id } = useParams();
@@ -31,7 +32,7 @@ export default function Project() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [tags, setTags] = useState([]);
-  const { updateProject, deleteProject } = useProject({
+  const { updateProject } = useProject({
     tags,
     projectTitle,
     id,
@@ -62,7 +63,15 @@ export default function Project() {
     },
   ];
 
-  const { modalOpen, closeModal, openModal } = useModal();
+  const {
+    deleteModalOpen,
+    closeDeleteModal,
+    openDeleteModal,
+    tagsModalOpen,
+    closeTagsModal,
+    openTagsModal,
+  } = useModal();
+
   const removeTags = (index) => {
     const newTags = [...tags];
     newTags.splice(index, 1);
@@ -89,12 +98,18 @@ export default function Project() {
             }}
           />
           <CircleButton
-            onClick={deleteProject}
+            onClick={openDeleteModal}
             icon={<MdDeleteForever className="text-4xl" />}
             btnColor={"btn-error"}
             tooltipColor={"tooltip-error"}
             tooltipPosition={"tooltip-bottom"}
             tooltipText={"Projekt löschen"}
+          />
+          <DeleteProjectModal
+            closeModal={closeDeleteModal}
+            modalOpen={deleteModalOpen}
+            projectTitle={projectTitle}
+            id={id}
           />
         </div>
         <div className="flex mt-6">
@@ -127,14 +142,14 @@ export default function Project() {
           )}
           <button
             className="flex gap-2 btn btn-primary btn-outline btn-xs border-dashed"
-            onClick={openModal}
+            onClick={openTagsModal}
           >
             Hinzufügen
           </button>
 
           <TagsModal
-            closeModal={closeModal}
-            modalOpen={modalOpen}
+            closeModal={closeTagsModal}
+            modalOpen={tagsModalOpen}
             id={id}
             oldTags={tags}
           />
