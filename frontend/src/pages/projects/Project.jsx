@@ -14,10 +14,10 @@ registerLocale("de", de);
 import { PiChecksBold, PiCheckCircleBold } from "react-icons/pi";
 import { TbCalendarPlus, TbCalendarMinus } from "react-icons/tb";
 import useModal from "../../hooks/useModal";
-import TagsModal from "../../projectManagement/addProjectModal/TagsModal";
+import TagsModal from "../../projectManagement/projectDetails/TagsModal";
 import CircleButton from "../../components/ui/buttons/CircleButton";
 import { MdDeleteForever } from "react-icons/md";
-import DeleteProjectModal from "../../projectManagement/addProjectModal/DeleteProjectModal";
+import DeleteProjectModal from "../../projectManagement/projectDetails/DeleteProjectModal";
 
 export default function Project() {
   const { id } = useParams();
