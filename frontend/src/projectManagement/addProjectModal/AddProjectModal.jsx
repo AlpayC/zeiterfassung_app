@@ -116,6 +116,17 @@ export default function AddProjectModal({ closeModal, modalOpen }) {
             shortcutList={overlayList}
           />
         }
+        kbd
+        kbdList={[
+          {
+            title: "Schließen",
+            key: "esc",
+          },
+          {
+            title: "Speichern",
+            key: " ↵ ",
+          },
+        ]}
       >
         <div className="flex flex-col items-center justify-evenly ">
           <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3">

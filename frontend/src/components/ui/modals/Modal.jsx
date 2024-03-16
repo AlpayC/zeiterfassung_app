@@ -9,6 +9,8 @@ export default function Modal({
   modalOpen,
   children,
   shortcutOverlay,
+  kbd,
+  kbdList,
 }) {
   const modalRef = useRef();
   useEffect(() => {
@@ -33,17 +35,6 @@ export default function Modal({
     };
   }, [closeModal]);
 
-  const kbdList = [
-    {
-      title: "Schließen",
-      key: "esc",
-    },
-    {
-      title: "Speichern",
-      key: " ↵ ",
-    },
-  ];
-
   return (
     <>
       <dialog
@@ -55,7 +46,12 @@ export default function Modal({
           <section className="modal-box mb-36 !w-[91%] " ref={modalRef}>
             {children}
           </section>
-          <Kbd keyList={kbdList} position={"absolute top 1/2"} />
+          {kbd ? (
+            <Kbd keyList={kbdList} position={"absolute top 1/2 mt-4"} />
+          ) : (
+            <></>
+          )}
+
           {shortcutOverlay ? shortcutOverlay : <></>}
 
           <div className="mb-72">

@@ -14,7 +14,10 @@ registerLocale("de", de);
 import { PiChecksBold, PiCheckCircleBold } from "react-icons/pi";
 import { TbCalendarPlus, TbCalendarMinus } from "react-icons/tb";
 import useModal from "../../hooks/useModal";
-import TagsModal from "../../projectManagement/addProjectModal/TagsModal";
+import TagsModal from "../../projectManagement/projectDetails/TagsModal";
+import CircleButton from "../../components/ui/buttons/CircleButton";
+import { MdDeleteForever } from "react-icons/md";
+import DeleteProjectModal from "../../projectManagement/projectDetails/DeleteProjectModal";
 
 export default function Project() {
   const { id } = useParams();
@@ -29,16 +32,9 @@ export default function Project() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [tags, setTags] = useState([]);
-  const {
-    updateProject,
-    updateProjectStatus,
-    updateProjectTags,
-    deleteProject,
-  } = useProject({
+  const { updateProject } = useProject({
     tags,
     projectTitle,
-    startDate,
-    endDate,
     id,
     projectDescription,
     projectStatus,
@@ -54,7 +50,6 @@ export default function Project() {
       setEndDate(filteredProject.endDate);
       setTags(filteredProject.tags);
       setProjectStatus(filteredProject.projectStatus);
-
       setActiveStatus(
         filteredProject.projectStatus.find((status) => status.status === true)
       );
@@ -68,13 +63,22 @@ export default function Project() {
     },
   ];
 
-  const { modalOpen, closeModal, openModal } = useModal();
+  const {
+    deleteModalOpen,
+    closeDeleteModal,
+    openDeleteModal,
+    tagsModalOpen,
+    closeTagsModal,
+    openTagsModal,
+  } = useModal();
+
   const removeTags = (index) => {
     const newTags = [...tags];
     newTags.splice(index, 1);
     setTags(newTags);
-    updateProjectTags(newTags);
+    updateProject({ newTags });
   };
+
   return (
     <section className="overflow-y-scroll w-full">
       <article className="card bg-base-300 shadow-xl p-6  rounded-2xl m-10 ">
@@ -84,7 +88,7 @@ export default function Project() {
             active={activeStatus}
             setActive={(newActiveStatus) => {
               setActiveStatus(newActiveStatus);
-              updateProjectStatus(projectStatus, newActiveStatus);
+              updateProject({ projectStatus, newActiveStatus });
             }}
             onClick={(selectedStatus) => {
               const newActiveStatus = projectStatus.find(
@@ -93,12 +97,20 @@ export default function Project() {
               setActiveStatus(newActiveStatus);
             }}
           />
-          <button
-            className="btn btn-outline btn-warning"
-            onClick={deleteProject}
-          >
-            X
-          </button>
+          <CircleButton
+            onClick={openDeleteModal}
+            icon={<MdDeleteForever className="text-4xl" />}
+            btnColor={"btn-error"}
+            tooltipColor={"tooltip-error"}
+            tooltipPosition={"tooltip-bottom"}
+            tooltipText={"Projekt löschen"}
+          />
+          <DeleteProjectModal
+            closeModal={closeDeleteModal}
+            modalOpen={deleteModalOpen}
+            projectTitle={projectTitle}
+            id={id}
+          />
         </div>
         <div className="flex mt-6">
           <ImgUploadBtn />
@@ -130,14 +142,14 @@ export default function Project() {
           )}
           <button
             className="flex gap-2 btn btn-primary btn-outline btn-xs border-dashed"
-            onClick={openModal}
+            onClick={openTagsModal}
           >
             Hinzufügen
           </button>
 
           <TagsModal
-            closeModal={closeModal}
-            modalOpen={modalOpen}
+            closeModal={closeTagsModal}
+            modalOpen={tagsModalOpen}
             id={id}
             oldTags={tags}
           />
@@ -173,11 +185,8 @@ export default function Project() {
               selected={startDate}
               locale="de"
               dateFormat={"dd.MM.yyyy"}
-              onChange={(date) => setStartDate(date)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateProject(e);
-                }
+              onSelect={(newStartDate) => {
+                updateProject({ newStartDate });
               }}
             />
           </div>
@@ -191,11 +200,8 @@ export default function Project() {
               selected={endDate}
               locale="de"
               dateFormat={"dd.MM.yyyy"}
-              onChange={(date) => setEndDate(date)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateProject(e);
-                }
+              onSelect={(newEndDate) => {
+                updateProject({ newEndDate });
               }}
             />
           </div>
@@ -204,36 +210,12 @@ export default function Project() {
               <PiChecksBold className="text-2xl " />
               Aufgaben
             </p>
-            <DatePicker
-              className="bg-accent bg-opacity-0 w-full card-body focus-visible:outline-none"
-              selected={endDate}
-              locale="de"
-              dateFormat={"dd.MM.yyyy"}
-              onChange={(date) => setEndDate(date)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateProject(e);
-                }
-              }}
-            />
           </div>
           <div className="card  bg-success bg-opacity-60 flex p-5">
             <p className="flex items-center gap-2">
               <PiCheckCircleBold className="text-2xl " />
               Fortschritt
             </p>
-            <DatePicker
-              className="bg-secondary bg-opacity-0 w-full card-body focus-visible:outline-none"
-              selected={endDate}
-              locale="de"
-              dateFormat={"dd.MM.yyyy"}
-              onChange={(date) => setEndDate(date)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateProject(e);
-                }
-              }}
-            />
           </div>
         </section>
       </article>
